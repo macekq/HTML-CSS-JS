@@ -1,1 +1,317 @@
+body{
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
 
+    overflow: hidden;
+
+    background-color: rgb(50,50,50);
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    color: white;
+    text-align: center;
+}
+main {
+    text-align: center;
+}
+#mainMenu{
+    transition: 0.5s;
+    top: 0;
+    left: 0;
+    position: absolute;
+
+    width: 5vh;
+    height: 100%;
+    background-color: rgb(50, 50, 75);
+
+    border-right: 1vh solid rgb(35,35,35);
+    box-shadow: 0 0 10px rgb(120,120,120);
+}
+#sideMenu{
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    left: 5.8vh;
+    background-color: rgb(35,35,35);
+    box-shadow: 5px 5px 5px rgba(120, 120, 120, 0.3);
+}
+#sideMenu div{
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0.5vh;
+    margin: 1vh;
+    border-color: black;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+#sideMenu div:hover{
+    border: 0.1vh solid white;
+    border-radius: 10px;
+}
+#downloadTetris{
+    width: 2em;
+    transition: 0.5s;
+}
+#dowloadTetris:hover{
+    box-shadow: 0 0 5px rgb(150,150,150);
+}
+#tetrisBox{
+    max-height: 40%;
+
+    position: absolute;
+    top: 10%;
+    left: 20%;
+
+    display: flex;
+    width: 50%;
+    height: 40%;
+    transform: translateX(+50%);
+    border: 0.25vh solid rgb(150,150,150);
+    border-radius: 13px;
+}
+#tetrisImg{
+    height: auto; width: auto;
+
+    border-right: 0.25vh solid rgb(150,150,150);
+    border-radius: 10px 0 0 10px;
+}
+#blenderBox{
+    position: absolute;
+    left: 10vw;
+    top: 10vh;
+
+    border: 0.25vh solid rgb(150,150,150);
+    border-radius: 13px;
+    width: 30%;
+    overflow-y: auto;
+    max-height: 80%;
+}
+#logicgateBox{
+    max-height: 40%;
+
+    position: absolute;
+    top: 55%;
+    left: 20%;
+    
+    width: 50%;
+    height: auto;
+    transform: translateX(+50%);
+    border: 0.25vh solid rgb(150,150,150);
+    border-radius: 13px;
+}
+#paticka{
+    position: absolute;
+
+    top: 100%;
+
+    transform: translate(20%, -120%);
+
+    box-shadow: 0 0 5px rgb(150,150,150);
+    font-size: 1.2em;
+    font-size-adjust: 1.5em;
+    display: flex;
+
+    width: 70%;
+    background-color: rgb(50, 50, 75);
+    border: 0.2vh solid white;
+    border-radius: 15px;
+    padding: 1%;
+}
+#paticka div{
+    margin: auto;
+}
+#scroll-on {
+    overflow-y: auto;
+    margin: 10vh 1vw;
+}
+#textLukasVytvory{
+    text-align: left;
+    padding: 5%;
+    overflow: auto;
+}
+#everything{
+    /* background-color: rgba(0,150,200,0.3); */
+    position: absolute;
+    top: 12vh;
+    left: 0;
+    width: 100vw;
+    height: 88vh;
+    overflow-y: auto;
+}
+#pisquarkyContainer{
+    position: absolute;
+    top: 50%; left: 50%;
+    
+    background-color: rgb(100,100,100);
+    /* box-shadow: 0 0 10px white; */
+    border-radius: 15px;
+    /* border-right: 5px solid  lightgray; border-bottom: 5px solid lightgray; */
+    box-shadow: 0 0 10px white;
+
+    width: 50vh; height: 50vh;
+
+    transform: translate(-50%, -50%);
+}
+#pisquarkyTable{
+    width: 90%; height: 90%;
+    margin: 5%;
+    padding: 5px;
+}
+#tableScale{
+    position: absolute;
+    top: 80%;
+    transform: translateX(-50%);
+}
+.pisquarkyCell{
+    background-color: rgb(150,150,150);
+    border: 0.25vh solid black;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 0.8vh;
+    width: 30%;
+    height: 30%;
+}
+.pisquarkyCell img{
+    max-width: 80%;
+}
+.zajemDiv{
+    position: absolute;
+
+    width: 40%;
+    border-color: rgb(150,150,150);
+    
+    padding: 2%;
+    border-radius: 10px;
+}
+.authorNames{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100vh;
+    transform: translate(-47.5%, 600%) rotate(90deg);
+    color: rgba(255,255,255, 0.2);
+    font-size: 2em; font-weight: bold;
+}
+.authorNames p{
+    user-select: none;
+    width: 100vh;
+    text-align: center;
+}
+.iconContainer{
+    position: absolute;
+    top: 50%;
+    
+    transform: translate(0, -50%);
+
+    width: 100%;
+    text-align: center;
+}
+.iconContainer img{
+    width: 4vh;
+    cursor: pointer;
+
+    border-radius: 5px;
+    border-color:black;
+}
+.iconContainer img:hover{
+    transition: 1s;
+    border: 0.1vh solid white;
+    border-radius: 10px;
+}
+.loremText{
+    text-align: center;
+    max-width: 60vw;
+}
+/*
+!
+!
+!
+Matias je cgodici tragedie
+!
+!
+!
+*/
+.gallery {
+    list-style-type: none;
+}
+.image { /*matis je qlueles*/
+    /*position: fixed;*/
+    max-width: fit-content;
+    position: relative;
+    border: 0.1vh solid white;
+    border-radius: 13px;
+    margin: 0vh 5vw 10vh 5vw;
+    /*flex: 1 1 200px;*/
+}
+.image img {
+    height: auto;
+    max-width: 100%;
+    display: block;
+    border-radius: 13px;
+}
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    text-align: center;
+    font-size: min(3rem, 10vw);
+    border-radius: 0 0 13px 13px;
+}
+.caption a {
+    color: white;
+    text-decoration: none;
+}
+@media only screen and (min-width: 1240px) and (max-width: 1800px){
+    #showcase-2 {
+        left: 50%;
+        transform: translate(0, -100%);
+    }
+    #showcase-3 {
+        transform: translate(0, -100%);
+    }
+}
+@media only screen and (min-width: 1800px) {
+    .image {
+        margin-top: 0vh;
+    }
+    #scroll-on {
+        overflow-y: hidden;
+    }
+    #showcase-2 {
+        left: 30%;
+        transform: translate(0, -100%);
+    }
+    #showcase-3 {
+        left: 60%;
+        transform: translate(0, -200%);
+    }
+}
+@media (max-width: 640px){
+    #everything div{
+        font-size: 0.6em;
+        margin: 5%;
+        position: relative;
+        transform: none;
+        top: 0;
+        left: 20%;
+        max-width: 100%; max-height: 100%;
+    }
+    #tetrisBox{
+        display: flex;
+        width: 60%;
+    }
+    #textLukasVytvory{
+        padding: 0;
+        width: 40%;
+    }
+    #paticka{
+        font-size: 0.6em;
+    }
+    #sideMenu{
+        font-size: 0.6em;
+    }
+}
