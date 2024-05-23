@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styl.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="mainMenu">
+        <div class="authorNames"><p>M a c u r a - K o n č a k - C o r p .</p></div>
+        <div class="iconContainer">
+            <img onclick="changeURL('Vytejte.html')" src="icons/homeIcon.svg" alt="HomeButton">
+            <img onclick="changeURL('AboutMatias.html')" src="icons/matiaskockokluk.png" alt="MatiasButton">
+            <img onclick="changeURL('AboutLukas.html')" src="icons/top.png" style="box-shadow: 0 0 5px white;" alt="LukasButton">
+            <img onclick="changeURL('calculator.html')" src="icons/bonus.svg" alt="BonusButton">
+        </div>
+    </div>
+    <div id="sideMenu">
+        <div onclick="changeURL('AboutLukas.html')" style="box-shadow: 0 0 5px white;">kariera</div>
+        <div onclick="changeURL('AboutLukas-zajmy.html')">zajmy</div>
+        <div onclick="changeURL('AboutLukas-vytvory.html')">vytvory</div>
+    </div>
+
+    <footer id="paticka"></footer>
+
+    <h1>Lukáš Král Macura</h1>
+
+    <div class="zajemDiv" style="border-right: 0.25vh solid; border-bottom: 0.25vh solid; left: 50%; transform: translateX(-50%); font-size: 1.2em;">
+        <h2 style="text-align: left;">elektro hardware</h2>
+        Lukáš(matematický génius) započal svou karieru business mana započal v roce 2022 po
+        artroskopii levého kolene kvůli které nemohl chodit a věnovat se svým běžným koníčkům
+        (basketbal, powerlifting, skok do písku) se Lukáš(šachový mistr) rozhodl rozšířit své 
+        obzory v oblasti elektrotechniky
+    </div>
+
+
+    <script src="js/main.js"></script>
+</body>
+</html>

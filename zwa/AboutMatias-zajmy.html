@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styl.css">
+    <title>ZWA - MATIAS - ZÁJMY</title>
+</head>
+<body>
+
+    <div id="mainMenu">
+        <div class="authorNames"><p>M a c u r a - K o n č a k - C o r p .</p></div>
+        <div class="iconContainer">
+            <img onclick="changeURL('Vytejte.html')" src="icons/homeIcon.svg" alt="HomeButton">
+            <img onclick="changeURL('AboutMatias.html')" src="icons/matiaskockokluk.png" style="box-shadow: 0 0 5px white;" alt="MatiasButton">
+            <img onclick="changeURL('AboutLukas.html')" src="icons/top.png" alt="LukasButton">
+            <img onclick="changeURL('calculator.html')" src="icons/bonus.svg" alt="BonusButton">
+        </div>
+    </div>
+
+    <div id="sideMenu">
+        <div onclick="changeURL('AboutMatias.html')">kariera</div>
+        <div onclick="changeURL('AboutMatias-zajmy.html')" style="box-shadow: 0 0 5px white;">zajmy</div>
+        <div onclick="changeURL('AboutMatias-vytvory.html')">vytvory</div>
+    </div>
+
+    <main>
+        <h1>Matias - Zájmy</h1>
+        <p>Matias se velmi zajímá o programovaní, ženy a modeling jak je možné vidět na těchto obrázcích.</p>
+        <div id="scroll-on">
+            <ul class="gallery">
+                <li>
+                    <div class="image" id="modeling-1">
+                        <img src="imgs/modeling-1.webp" alt="">
+                        <div class="caption"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="image" id="modeling-2">
+                        <img src="imgs/modeling-2.webp" alt="">
+                        <div class="caption"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="image" id="modeling-3">
+                        <img src="imgs/modeling-3.webp" alt="">
+                        <div class="caption"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <footer id="paticka"></footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
