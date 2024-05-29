@@ -121,10 +121,6 @@ main {
 #paticka div{
     margin: auto;
 }
-#scroll-on {
-    overflow-y: auto;
-    margin: 10vh 1vw;
-}
 #textLukasVytvory{
     text-align: left;
     padding: 5%;
@@ -232,21 +228,33 @@ Matias je cgodici tragedie
 !
 !
 */
-.gallery {
-    list-style-type: none;
+a {
+    color: white;
 }
-.image { /*matis je qlueles*/
-    /*position: fixed;*/
-    max-width: fit-content;
+#scroll-on {
+    overflow-y: auto;
+    margin: 10vh 2vw;
+}
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+.image {  /*matis je qlueles*/
     position: relative;
     border: 0.1vh solid white;
     border-radius: 13px;
-    margin: 0vh 5vw 10vh 5vw;
-    /*flex: 1 1 200px;*/
+    /*margin: 1vh;*/
+    margin: 0vh 0vw 10vh 5vw;
+}
+@media only screen and (max-width: 800px){
+    #scroll-on {
+        margin-left: 10vw;
+    }
 }
 .image img {
-    height: auto;
-    max-width: 100%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
     display: block;
     border-radius: 13px;
 }
@@ -265,30 +273,8 @@ Matias je cgodici tragedie
     color: white;
     text-decoration: none;
 }
-@media only screen and (min-width: 1240px) and (max-width: 1800px){
-    #showcase-2 {
-        left: 50%;
-        transform: translate(0, -100%);
-    }
-    #showcase-3 {
-        transform: translate(0, -100%);
-    }
-}
-@media only screen and (min-width: 1800px) {
-    .image {
-        margin-top: 0vh;
-    }
-    #scroll-on {
-        overflow-y: hidden;
-    }
-    #showcase-2 {
-        left: 30%;
-        transform: translate(0, -100%);
-    }
-    #showcase-3 {
-        left: 60%;
-        transform: translate(0, -200%);
-    }
+#modeling-4 {
+    margin-bottom: 20vh;
 }
 @media (max-width: 640px){
     #everything div{
