@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>peak</title>
+</head>
+<style>
+    body{
+        background-color: black;
+        overflow: hidden;
+    }
+    main{
+        overflow: hidden;
+    }
+    .square{
+        margin: 0; padding: 0;
+        position: absolute;
+
+        border-radius: 0.2vw;
+
+        width: 10vh; height: 10vh;
+    }
+    #amount{
+        position: absolute;
+        top: 98%; left: 50%;
+        transform: translate(-50%, -100%);
+
+        -webkit-appearance: none;
+        appearance: none;
+
+        cursor: pointer;
+
+        width: 50vw; height: 5px;
+        border-radius: 5px;
+        background: red;
+    }
+    @media (orientation: portrait){
+        .square{
+            width: 10vw; height: 10vw;
+        }
+    }
+</style>
+<body>
+    <main id="container"></main>
+    <input type="range" id="amount" min="1" max="100" value="1">
+    <script src="script.js"></script>
+</body>
+</html>
