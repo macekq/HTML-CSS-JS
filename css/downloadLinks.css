@@ -63,7 +63,7 @@ main div{
     overflow-y: scroll;
     padding-top: 6.5vw;
 
-    width: 76vw;
+    width: 84vw;
     height: 100vh;
     background-color: rgba(0,0,0,0.2);
     transform: translateY(-6.5vw);
