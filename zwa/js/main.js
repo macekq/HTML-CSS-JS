@@ -8,7 +8,7 @@ try{
 let hoverOverSideMenu = false
 
 function changeURL(url){
-    window.location.assign(url)
+    window.location.href = url
 }
 function openMenu(){
     mainMenu.style.left = '0'
@@ -21,39 +21,89 @@ function closeMenu(){
 function calculate(){
     document.getElementById('ans').textContent = 'Hello World'
 }
-function makeTable(X, Y){
-    for(let y = 0; y<Y; y++){
-        let row = pisquarky.insertRow(y)
-        for(let x = 0; x<X; x++){
-
-            let cell = row.insertCell(x)
-
-            cell.classList.add('pisquarkyCell')
-            cell.id = `cell${x}-${y}`
-
-            cell.addEventListener('mouseup', () => {
-                
-                if(cell.innerHTML == ''){
-
-                    cell.innerHTML = '<img src="assets/cross.svg">'
-                    pisquarkySaved.push([x, y])
-                    userComp[[x, y]] = 0
-                    
-
-                    let rdmX = Math.floor(Math.random()*X), rdmY = Math.floor(Math.random()*Y)
-                    while(pisquarkySaved.includes([rdmX, rdmY])){
-                        rdmX = Math.floor(Math.random()*X), rdmY = Math.floor(Math.random()*Y)
-                    }
-
-                    document.getElementById(`cell${rdmX}-${rdmY}`).innerHTML = '<img src="assets/circle.svg">'
-                    pisquarkySaved.push([rdmX, rdmY])
-                    userComp[[rdmX, rdmY]] = 1
-                }
-            })
+function displayVictory(msg){
+    document.getElementById('ans').innerText = msg
+}
+function victory(correct){
+    
+    for(let i = 0; i<3; i++){
+        if(allCells[i][0] == correct && allCells[i][1] == correct && allCells[i][2] == correct){
+            return true
         }
     }
+    for(let j = 0; j<3; j++){
+        if(allCells[0][j] == correct && allCells[1][j] == correct && allCells[2][j] == correct){
+            return true
+        }
+    }
+
+    if(allCells[0][0] == correct && allCells[1][1] == correct && allCells[2][2] == correct){
+        
+        return true
+    }else if(allCells[2][0] == correct && allCells[1][1] == correct && allCells[0][2] == correct){
+        
+        return true
+    }
+    return false
+}
+function makeTable(X, Y){
+    try{
+        let restart = false
+
+        for(let y = 0; y<Y; y++){
+            let row = pisquarky.insertRow(y)
+            for(let x = 0; x<X; x++){
+
+                let cell = row.insertCell(x)
+
+                cell.classList.add('pisquarkyCell')
+                cell.id = `cell${x}-${y}`
+
+                cell.addEventListener('mouseup', () => {
+                    if(restart || filledCells == 9){
+                    
+                        changeURL('pisquarky.html')
+
+                    }else if(cell.innerHTML == '' && filledCells < 9){
+
+                        cell.innerHTML = '<img src="assets/cross.svg">'
+                        allCells[y][x] = 1
+                        filledCells++
+                    
+                        if(victory(1)){
+
+                            displayVictory('vyhrali jste')
+                            restart = true       
+
+                        }else if(filledCells < 9){
+                        
+                            let rdmX = Math.floor(Math.random()*X), rdmY = Math.floor(Math.random()*Y)
+                            while(true){
+                                rdmX = Math.floor(Math.random()*X), rdmY = Math.floor(Math.random()*Y)
+
+                                if(document.getElementById(`cell${rdmX}-${rdmY}`).innerHTML == '') break
+                            }
+
+                            document.getElementById(`cell${rdmX}-${rdmY}`).innerHTML = '<img src="assets/circle.svg">'
+                            allCells[rdmY][rdmX] = 2
+                            filledCells++
+                        
+                            if(victory(2)){
+
+                                displayVictory('mel(a) by ses nad sebou zamyslet')
+                                restart = true
+
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    }catch(error){}
 }
 
+var filledCells = 0
+var allCells = [[0,0,0],[0,0,0],[0,0,0]]
 var menuOpened = false
 
 mainMenu.addEventListener('mouseleave', closeMenu)
@@ -64,8 +114,5 @@ try{
 }catch(error){}
 
 document.getElementById('paticka').innerHTML = '<div>Lukáš Macura, Matias Končak</div><div>Macura Končak Corp. ©2024</div><div>736 891 109</div>'
-
-var pisquarkySaved = []
-var userComp = {}
 
 makeTable(3,3)

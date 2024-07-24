@@ -6,6 +6,45 @@
     <link rel="stylesheet" href="css/styl.css">
     <title>ZWA - LUKÁŠ - VÝTVORY</title>
 </head>
+<style>
+    main{
+        padding-left: 8vw; padding-right: 8vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow-y: auto !important;
+    }
+    #tetrisBox{
+        display: flex;
+    }
+    #tetrisBox p{
+        padding: 5%;
+    }
+    .box{
+        border-radius: 10px;
+        margin: 1.6%;
+        border: 0.2vh solid grey;   
+        max-width: 38.5vw;
+        max-height: 55vh;
+    }
+    #tetrisImg{
+        border-radius: 12px 0 0 12px;
+        border-right: 0.2vh solid grey;
+        height: 100%;
+        width: 25vw;
+    }
+    @media (orientation: portrait){
+        main{
+            display: block;
+        }
+        .box{
+            margin-left: auto; margin-right: auto;
+
+            margin-bottom: 5vh;
+            max-height: 100vh;
+            max-width: 70vw;
+        }
+    }
+</style>
 <body>
 
     <div id="mainMenu">
@@ -25,8 +64,8 @@
 
     <h1>Výsledky</h1>
 
-    <div id="everything">
-        <div id="tetrisBox">
+    <main id="everything">
+        <div id="tetrisBox" class="box">
             <img id="tetrisImg" src="assets/tetris-screenshot.png" alt="tetris-screenshot">
             <div id="textLukasVytvory">
                 <p>
@@ -38,22 +77,21 @@
                     teto hry tak jako Lukáš(budoucí monarch země koruny české)
                 </p>
                 <a href="assets/tetris-v3.zip" download="tetris-v3.zip">
-                    <img id="downloadTetris" src="icons/download.svg" alt="download here">
+                    <img style="height: 3em;" src="icons/download.svg" alt="download here">
                 </a>
             </div>
         </div>
 
-        <div id="blenderBox">
+        <div id="blenderBox" class="box">
             <img src="assets/motorka.png" alt="blender motorka" style="max-width: 100%; border-radius: 10px 10px 0 0; border-bottom: 0.25vh solid rgb(150,150,150);">
             <p style="padding: 5%; text-align: left;">
                 V létě roku 2023 se Lukáš(budoucí drzitel Nobelovy ceny za mír) věnoval tvorbě kvylitních
                 "low poly" 3D modelům<br><br>
                 na otázku: "znali jste Karla IV." odpověděl porad mi nevrátil mych 5grošů 🚬n
             </p>
-            <img src="assets/knife2.png" alt="blender nůž" style="max-width: 100%; border-radius: 0 0 10px 10px; border-top: 0.25vh solid rgb(150,150,150);">
         </div>
-
-        <div id="logicgateBox" style="text-align: left; overflow-y: auto;">
+        
+        <div id="logicgateBox" style="text-align: left; overflow-y: auto;" class="box">
             <p style="padding: 5%">
                 "editor hradel logických procesorů" je Lukášův(reinkarnace Napolena Bonaparte) poslední velký projekt
                 mimo tuto webovou stránku, je to současně jeho nejdelší projek (dohromady přes 1200 řádků)
@@ -61,7 +99,7 @@
                 <a href="vyzkouset/index.html" target="_blank" style="color: white; font-style: italic;">vyzkoušet</a>
             </p>
         </div>
-    </div>
+    </main>
 
     <footer id="paticka"></footer>
 
