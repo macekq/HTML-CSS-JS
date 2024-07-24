@@ -1,4 +1,6 @@
-document.getElementById('st-img').src = Math.floor(Math.random()*3) == 0 ? 'assets/guru.png' : 'assets/top.png'
+let guruPhotos = ['guru','top','nokia','mnam']
+document.getElementById('st-img').src = `assets/${guruPhotos[Math.floor(Math.random()*guruPhotos.length)]}.png`
+
 
 var menu = document.getElementById('menu'), linkCnt = document.getElementById('linkContainer'), menuBtt = document.getElementById('menuBtt')
 var linkCount = 10
