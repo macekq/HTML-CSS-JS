@@ -1,4 +1,4 @@
-let guruPhotos = ['guru','top','nokia','mnam']
+let guruPhotos = ['top','nokia','mnam']
 document.getElementById('st-img').src = `assets/${guruPhotos[Math.floor(Math.random()*guruPhotos.length)]}.png`
 
 
