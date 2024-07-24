@@ -61,7 +61,7 @@ footer img{
     font-family: "Roboto", sans-serif;
     font-size: 1.2em;
 
-    height: 5vh;
+    height: 4vh;
     max-height: 55vh;
 
     padding: 1vh;
@@ -82,7 +82,7 @@ footer img{
 }
 #linkContainer{
     width: 100%;
-    max-height: 5vh;
+    max-height: 4vh;
     height: auto;
 
     display: flex;
@@ -94,7 +94,7 @@ footer img{
 
     transition: 0.5s;
 
-    height: 4vh;
+    height: 3vh;
     padding-top: 1vh;
 
     padding-left: 3vh;
@@ -145,11 +145,12 @@ footer img{
     #linkContainer{
         flex-wrap: nowrap;
         display:grid;
+        padding-top: 0.5vh;
+        max-height: 5vh;
     }
     #linkContainer div{
         width: 100%;
         top: 0;
-        margin-left: 0;
     }
     #linkContainer a{
         width: 80%;
@@ -158,6 +159,7 @@ footer img{
         width: 100%;
     }
     #menu{
+        height: 5vh;
         gap: 0;
         padding: 0;
     }

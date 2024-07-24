@@ -37,10 +37,15 @@ function showLinks(){
     menuDown = true
 }
 function hideLinks(){
-    menu.style.height = '5vh'
+    
+    if(window.innerWidth > 640){
+        menu.style.height = '4vh'
+        linkCnt.style.maxHeight = '4vh'
+    }else{
+        menu.style.height = '5vh'
+        linkCnt.style.maxHeight = '5vh'
+    }
     menu.style.overflow = 'none'
-
-    linkCnt.style.maxHeight = '5vh'
 
     menuBtt.style.transform = ''
 
