@@ -41,13 +41,13 @@ main{
 .slides{
     height: 100vh;
     width: 6vw;
-    min-width: 5vh;
 
     transition: 0.5s;
     box-shadow: 5px 0 5px rgba(0,0,0,.4) inset;
 }
 .slides:hover{
     width: 88vw;
+    max-width: 100vw;
 }
 main div img{
     width: 4vw;
