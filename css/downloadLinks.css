@@ -178,3 +178,8 @@ main div{
         max-width: 40vh;
     }
 }
+@media (max-width: 640px){
+    body{
+        font-size: 0.8em
+    };
+}
