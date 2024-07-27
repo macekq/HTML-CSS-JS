@@ -34,6 +34,7 @@ body{
     margin: 0;
     color: white;
     font-family: "Roboto", sans-serif;
+    font-size: 1.2vw;
 }
 main{
     display: flex;
@@ -57,7 +58,6 @@ main div{
     max-width: 100vw;
 }
 .content div{
-    
     width: fit-content;
     display: flex;
     margin: auto;
@@ -81,6 +81,9 @@ main div{
     margin: 0;
     position: relative;
 }
+.codeInfo, .downloadButton{
+    position: relative;
+}
 .img-download:hover .showCase{
     opacity: 0.3;
 }
@@ -100,9 +103,36 @@ main div{
 
     width: 84vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.2);
     transform: translateY(-6.5vw);
     margin-left: 6vw;
+}
+.sourceCode{
+    font-family: 'Courier New', Courier, monospace;
+    width: 60%;
+    background-color: rgba(0,0,0,0.4);
+    overflow-y: scroll;
+    height: 40vh;
+    border-radius: 0.4vw;
+}
+.codeInfo{
+    width: 40%;
+    height: 40vh;
+    padding: 5%;
+}
+.codeInfo:nth-child(odd){
+    text-align: right;
+}
+#pythonContent{
+    padding-top: 6.5vw;
+    margin-left: 6vw;
+    width: 84vw;
+    height: 100vh;
+    transform: translateY(-6.5vw);
+
+    overflow-y: scroll;
+}
+#pythonContent div{
+    display: flex;
 }
 #exe{
     background-image: linear-gradient(135deg, rgb(200,42,200), rgb(40,100,160), grey);
@@ -131,4 +161,21 @@ main div{
 #cnt{
     position: absolute;
     left: 24vw;
+}
+@media (orientation: landscape){
+    body{
+        font-size: 1em;
+    }
+    .img-download{
+        max-width: 10vw;
+    }
+    .content{
+        max-width: 68vw;
+        padding-left: 10vw;
+        padding-right: 10vw;
+        background-color: rgba(0,0,0,0.4);
+    }
+    .projectInfo{
+        max-width: 40vh;
+    }
 }

@@ -16,7 +16,7 @@
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero sint explicabo illum tempore sunt maxime animi voluptate corporis placeat eaque, molestias ad laborum dicta neque ea voluptatem ipsa eum illo.
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, eum perspiciatis est accusamus sapiente praesentium fugit, dignissimos voluptatem quaerat velit, consequuntur et dolor commodi. Assumenda debitis pariatur eos rem perferendis?
                     </div>
-                    <a href="">
+                    <a href="download-links/python_doslova.exe">
                         <div class="img-download">
                             <img src="assets/download.png" class="downloadBtt">
                             <img src="assets/exe/snake.png" class="showCase">
@@ -24,10 +24,10 @@
                     </a>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="download-links/new_tetris_03.exe">
                         <div class="img-download">
                             <img src="assets/download.png" class="downloadBtt">
-                            <img src="assets/exe/kofola.png" class="showCase">
+                            <img src="assets/exe/tetris.png" class="showCase">
                         </div>
                     </a>
                     <div class="projectInfo">
@@ -38,7 +38,7 @@
                     <div class="projectInfo">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero sint explicabo illum tempore sunt maxime animi voluptate corporis placeat eaque, molestias ad laborum dicta neque ea voluptatem ipsa eum illo.
                     </div>
-                    <a href="">
+                    <a href="download-links/pac-man-02.zip">
                         <div class="img-download">
                             <img src="assets/download.png" class="downloadBtt">
                             <img src="assets/exe/pacman.png" class="showCase">
@@ -46,7 +46,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="download-links/flappy_bird_beta.exe">
                         <div class="img-download">
                             <img src="assets/download.png" class="downloadBtt">
                             <img src="assets/exe/flappybird.png" class="showCase">
@@ -60,10 +60,10 @@
                     <div class="projectInfo">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero sint explicabo illum tempore sunt maxime animi voluptate corporis placeat eaque, molestias ad laborum dicta neque ea voluptatem ipsa eum illo.
                     </div>
-                    <a href="">
+                    <a href="download-links/pig_game.zip">
                         <div class="img-download">
                             <img src="assets/download.png" class="downloadBtt">
-                            <img src="assets/exe/tetris.png" class="showCase">
+                            <img src="assets/exe/kofola.png" class="showCase">
                         </div>
                     </a>
                 </div>
@@ -71,7 +71,33 @@
             </div>
         </div>
         <div class="slides" id="python"><img src="assets/python.svg">
-            <div class="content"></div>
+            <div id="pythonContent">
+                <div>
+                    <div class="codeInfo">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit assumenda soluta laborum repudiandae! Nihil quas dicta excepturi voluptas, atque culpa, quisquam minima numquam perferendis accusamus sapiente eaque animi repellat quis!
+                    </div>
+                    <div class="sourceCode" id="myFile-0"></div>
+                </div>
+                <div>
+                    <div class="sourceCode" id="myFile-1"></div>
+                    <div class="codeInfo">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim vero unde officia ratione aliquid delectus doloremque commodi, iure, neque nostrum explicabo nisi accusantium repellat doloribus fugit culpa odio quisquam incidunt.
+                    </div>
+                </div>
+                <div>
+                    <div class="codeInfo">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit assumenda soluta laborum repudiandae! Nihil quas dicta excepturi voluptas, atque culpa, quisquam minima numquam perferendis accusamus sapiente eaque animi repellat quis!
+                    </div>
+                    <div class="sourceCode" id="myFile-2"></div>
+                </div>
+                <div>
+                    <div class="sourceCode" id="myFile-3"></div>
+                    <div class="codeInfo">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim vero unde officia ratione aliquid delectus doloremque commodi, iure, neque nostrum explicabo nisi accusantium repellat doloribus fugit culpa odio quisquam incidunt.
+                    </div>
+                </div>
+                <br><br><br><br><br><br><br><br><br><br>
+            </div>
         </div>
         <div class="slides" id="blender"><img src="assets/blender.svg">
             <div class="content">
@@ -166,6 +192,16 @@
         <img src="assets/github.svg">macekq
     </footer> 
 
-    <script></script>
+    <script>
+        const dirList = ['new_tetris_02.py','project_pacman.py','python_snake.py','pisquarky.py']
+        
+        for(let dir = 0; dir<dirList.length; dir++){
+            fetch(`assets/pythonFiles/${dirList[dir]}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(`myFile-${dir}`).innerText = data
+                })
+        }
+    </script>
 </body>
 </html>
