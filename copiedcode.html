@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Canvas Pointer</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Fixed position of the pointer on the canvas
+        const fixedPointerX = canvas.width / 2;
+        const fixedPointerY = canvas.height / 2;
+
+        // Draw the fixed pointer
+        function drawPointer(angle) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            ctx.save(); // Save the current state
+            ctx.translate(fixedPointerX, fixedPointerY); // Move the origin to the fixed pointer position
+            ctx.rotate(angle); // Rotate the canvas
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.moveTo(-10, -20); // Triangle pointing upwards
+            ctx.lineTo(10, -20);
+            ctx.lineTo(0, 0);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore(); // Restore the original state
+        }
+
+        // Update the pointer rotation based on cursor position
+        function updatePointer(event) {
+            const rect = canvas.getBoundingClientRect();
+            const cursorX = event.clientX - rect.left;
+            const cursorY = event.clientY - rect.top;
+            
+            const deltaX = cursorX - fixedPointerX;
+            const deltaY = cursorY - fixedPointerY;
+            const angle = Math.atan2(deltaY, deltaX); // Calculate the angle
+
+            drawPointer(angle);
+        }
+
+        // Set up event listener for mousemove
+        canvas.addEventListener('mousemove', updatePointer);
+
+        // Initial draw
+        drawPointer(0);
+
+    </script>
+</body>
+</html>
