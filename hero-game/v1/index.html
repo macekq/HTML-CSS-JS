@@ -14,10 +14,21 @@
 
         cursor: none;
     }
+    #checkboxBox{
+        position: absolute;
+        z-index: 100;
+    }
+    label{
+        text-shadow: 0 0 2px black;
+        color: white;
+    }
 </style>
 <body>
     <main>
-
+        <div id="checkboxBox">
+            <input type="checkbox" id="displayDestination">
+            <label for="displayDestination">display entity destination</label>
+        </div>
     </main>
 
     <canvas id="myCanvas"></canvas>

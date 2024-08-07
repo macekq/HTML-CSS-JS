@@ -23,9 +23,11 @@ function displayGoblin(X, Y, rotation, addedMovement, atackStage){
 
     ctx.restore()
 
-    ctx.beginPath()
-    ctx.moveTo(X, Y)
-    ctx.lineTo(PLAYER.x, PLAYER.y)
-    ctx.strokeStyle = 'red'
-    ctx.stroke()
+    if(document.getElementById('displayDestination').checked){
+        ctx.beginPath()
+        ctx.moveTo(X, Y)
+        ctx.lineTo(PLAYER.x, PLAYER.y)
+        ctx.strokeStyle = 'red'
+        ctx.stroke()
+    }
 }
