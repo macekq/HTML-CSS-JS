@@ -2,8 +2,29 @@
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
+const rect = canvas.getBoundingClientRect()
+
+var GOBLINS = {
+    speed: 1,
+    
+    1:{
+        x: 200, y: 200,
+        shIndex: 3,
+        atack: 0
+    },
+    2:{
+        x: 200, y:600,
+        shIndex: 0,
+        atack: 0
+    },
+    3:{
+        x: 200, y: 1000,
+        shIndex: 9,
+        atack: 0
+    }
+}
 var PLAYER = {
-    x: 300, y: 300,
+    x: window.innerWidth/2, y: window.innerHeight/2,
     orientation: 0,
     hair: 'rgb(200,200,200)',
     body: 'rgb(120,60,0)',
@@ -11,7 +32,7 @@ var PLAYER = {
         up: false, down: false,
         left: false, right: false
     },
-    speed: 4
+    speed: 2
 }
 var CURSOR = {
     x: -50, y: -50
@@ -72,19 +93,27 @@ function customCursor(X, Y){
     ctx.restore()
 
 }
-drawCharacter(0)
-
-window.addEventListener('resize', canvasWindowRatio)
-window.addEventListener('mousemove', e => {
-    
-    const rect = canvas.getBoundingClientRect()
-    let X = e.clientX - rect.left, Y = e.clientY - rect.top
+function playerOrientation(userX, userY){
+    let X = userX - rect.left, Y = userY - rect.top
 
     X -= PLAYER.x
     Y -= PLAYER.y
 
     PLAYER.orientation = Math.atan2(Y, X) + Math.PI/2
+}
+function determineOrientation(x1, y1, x2, y2){
+    let X = x1 - rect.left, Y = y1 - rect.top
 
+    X -= x2
+    Y -= y2
+
+    return Math.atan2(Y, X) + Math.PI/2
+}
+
+drawCharacter(0)
+
+window.addEventListener('resize', canvasWindowRatio)
+window.addEventListener('mousemove', e => {
     CURSOR.x = e.clientX, CURSOR.y = e.clientY
 })
 window.addEventListener('keydown', e => {
@@ -134,15 +163,24 @@ var mainInterval = setInterval(() => {
 
     
     if(PLAYER.movement.left || PLAYER.movement.right || PLAYER.movement.up || PLAYER.movement.down){
-        shArrIndex++
+        shArrIndex+=0.7
     
     }else{
-        if(shArr[shArrIndex] != 0) shArrIndex++
+        if(shArr[Math.floor(shArrIndex)] != 0) shArrIndex++
     }
     shArrIndex %= shArr.length
         
-    shoulderRotation = shArr[shArrIndex]
-        
+    shoulderRotation = shArr[Math.floor(shArrIndex)]
+    
+    playerOrientation(CURSOR.x, CURSOR.y)
     drawCharacter(shoulderRotation)
     customCursor(CURSOR.x, CURSOR.y)
-},16)
+
+    for(let i = 1; i<=3; i++){
+
+        displayGoblin(
+            GOBLINS[i].x, GOBLINS[i].y, determineOrientation(GOBLINS[i].x, GOBLINS[i].y, PLAYER.x, PLAYER.y), shArr[GOBLINS[i].shIndex], 0
+        )
+    
+    }
+},15)
