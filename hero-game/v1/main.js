@@ -163,7 +163,7 @@ var mainInterval = setInterval(() => {
 
     
     if(PLAYER.movement.left || PLAYER.movement.right || PLAYER.movement.up || PLAYER.movement.down){
-        shArrIndex+=0.7
+        shArrIndex += 0.7
     
     }else{
         if(shArr[Math.floor(shArrIndex)] != 0) shArrIndex++
@@ -174,13 +174,24 @@ var mainInterval = setInterval(() => {
     
     playerOrientation(CURSOR.x, CURSOR.y)
     drawCharacter(shoulderRotation)
-    customCursor(CURSOR.x, CURSOR.y)
 
     for(let i = 1; i<=3; i++){
+        
+        GOBLINS[i].orientation = determineOrientation(GOBLINS[i].x, GOBLINS[i].y, PLAYER.x, PLAYER.y)
+
+        let toAddX = Math.sin(GOBLINS[i].orientation) * GOBLINS.speed
+        let toAddY = Math.cos(GOBLINS[i].orientation) * GOBLINS.speed
+
+        GOBLINS[i].x -= toAddX, GOBLINS[i].y += toAddY
+        
+        GOBLINS[i].shIndex += 0.7
+        GOBLINS[i].shIndex %= shArr.length
 
         displayGoblin(
-            GOBLINS[i].x, GOBLINS[i].y, determineOrientation(GOBLINS[i].x, GOBLINS[i].y, PLAYER.x, PLAYER.y), shArr[GOBLINS[i].shIndex], 0
+            GOBLINS[i].x, GOBLINS[i].y, GOBLINS[i].orientation, shArr[Math.floor(GOBLINS[i].shIndex)], 0
         )
     
     }
+
+    customCursor(CURSOR.x, CURSOR.y)
 },15)
