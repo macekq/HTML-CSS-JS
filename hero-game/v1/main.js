@@ -13,6 +13,9 @@ var PLAYER = {
     },
     speed: 4
 }
+var CURSOR = {
+    x: -50, y: -50
+}
 const canvasWindowRatio = () => {
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
@@ -50,7 +53,25 @@ function drawCharacter(addedMovement){
 
     ctx.restore()
 }
+function customCursor(X, Y){
 
+    ctx.save()
+    ctx.translate(X, Y)
+
+    ctx.fillStyle = 'white'
+    ctx.strokeStyle = 'black'
+
+    for(let i = 0; i<4; i++){
+
+        ctx.rotate(i*Math.PI/2)
+
+        ctx.fillRect(5,-2, 16, 5)
+        ctx.strokeRect(5, -2, 16, 5)
+    }
+
+    ctx.restore()
+
+}
 drawCharacter(0)
 
 window.addEventListener('resize', canvasWindowRatio)
@@ -63,6 +84,8 @@ window.addEventListener('mousemove', e => {
     Y -= PLAYER.y
 
     PLAYER.orientation = Math.atan2(Y, X) + Math.PI/2
+
+    CURSOR.x = e.clientX, CURSOR.y = e.clientY
 })
 window.addEventListener('keydown', e => {
 
@@ -120,6 +143,6 @@ var mainInterval = setInterval(() => {
         
     shoulderRotation = shArr[shArrIndex]
         
-    console.log(shoulderRotation)
     drawCharacter(shoulderRotation)
-},24)
+    customCursor(CURSOR.x, CURSOR.y)
+},16)
