@@ -3,26 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>v1</title>
 </head>
-<style>
-    canvas{
-        position: absolute;
-        top: 0; left: 0;
-
-        background-color: rgb(100,100,100);
-
-        cursor: none;
-    }
-    #checkboxBox{
-        position: absolute;
-        z-index: 100;
-    }
-    label{
-        text-shadow: 0 0 2px black;
-        color: white;
-    }
-</style>
 <body>
     <main>
         <div id="checkboxBox">
@@ -32,6 +15,26 @@
     </main>
 
     <canvas id="myCanvas"></canvas>
+    
+    <div id="inventoryContainer">
+        <div id="wepones">
+            
+            <div>
+                <img id="slot1" src="assets/sesitOdMamy.png">
+                <label for="slot1">right-click</label>
+            </div>
+
+            <div>
+                <img id="slot2" src="assets/stylusBezBaterky.png">
+                <label for="slot2">left-click</label>
+            </div>
+        </div>
+
+        <div id="abilities">
+            <div></div>
+            <div></div>
+        </div>    
+    </div>
 
     <script src="goblin.js"></script>
     <script src="main.js"></script>

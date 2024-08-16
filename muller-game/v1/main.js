@@ -195,3 +195,7 @@ var mainInterval = setInterval(() => {
 
     customCursor(CURSOR.x, CURSOR.y)
 },15)
+
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});

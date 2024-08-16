@@ -1,0 +1,59 @@
+:root{
+    --ivtrSlotSize: 4vh;
+}
+canvas{
+    position: absolute;
+    top: 0; left: 0;
+
+    background-color: rgb(100,100,100);
+
+    cursor: none;
+}
+#checkboxBox{
+    position: absolute;
+    z-index: 100;
+}
+label{
+    text-shadow: 0 0 2px black;
+    color: white;
+}
+#inventoryContainer{
+    position: absolute;
+    top: 2.5vw; left: 2.5vw;
+
+    margin: 0; padding: 0;
+    width: 95vw;
+
+    display: flex;
+
+    font-size: 0.63em;
+    /* background-color: rgba(255,0,0,0.2); */
+}
+#wepones{
+    display: flex;
+}
+#wepones div{
+    margin-right: 1vw;
+    width: var(--ivtrSlotSize); height: var(--ivtrSlotSize);
+    
+    box-shadow: 0.1vh 0.1vh 0.1vh rgb(16,16,16) inset, 0.1vh 0.1vh 0.1vh rgb(16,16,16);
+    border: 0.2vw solid rgb(16,16,16);
+    background-color: rgba(100,100,100,0.6);
+}
+
+#abilities{
+    display: flex;
+}
+#abilities div{
+
+    margin-right: 1vw;
+    width: var(--ivtrSlotSize); height: var(--ivtrSlotSize);
+    
+    box-shadow: 0.1vh 0.1vh 0.1vh rgb(70,20,70) inset, 0.1vh 0.1vh 0.1vh rgb(70,20,70);
+    border: 0.2vw solid rgb(70,20,70);
+    background-color: rgba(100,100,100,0.6);
+} 
+img{
+    height: 90%;
+    margin: 5%;
+}
