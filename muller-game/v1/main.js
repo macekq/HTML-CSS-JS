@@ -32,7 +32,12 @@ var PLAYER = {
         up: false, down: false,
         left: false, right: false
     },
-    speed: 2
+    speed: 2,
+    health: 100
+}
+var PROJECTILES = {
+    clockSpeed: 7,
+    amount: 0
 }
 var CURSOR = {
     x: -50, y: -50
@@ -110,6 +115,16 @@ function determineOrientation(x1, y1, x2, y2){
     return Math.atan2(Y, X) + Math.PI/2
 }
 
+const healthElement = document.getElementById('totalHealth')
+
+function displayHealth(){
+    healthElement.style.width = `${PLAYER.health}%`
+    healthElement.innerText = PLAYER.health
+}
+
+
+displayHealth()
+
 drawCharacter(0)
 
 window.addEventListener('resize', canvasWindowRatio)
@@ -151,6 +166,24 @@ window.addEventListener('keyup', e => {
     }
 })
 
+
+window.addEventListener('mousedown', e => {
+
+    console.log(e.clientX, e.clientY)
+    if(e.button == 2){
+        
+        let crr = PROJECTILES.amount
+        PROJECTILES.amount++
+
+        PROJECTILES[crr] = {}
+        PROJECTILES[crr].x = PLAYER.x, PROJECTILES[crr].y = PLAYER.y
+        PROJECTILES[crr].rotation = PLAYER.orientation - Math.PI/2
+        PROJECTILES[crr].spin = 0
+        PROJECTILES[crr].type = 'clock'
+    
+        console.log(PROJECTILES, PLAYER.x , PLAYER.y, PLAYER.orientation)
+    }
+})
 var shoulderRotation = 0
 const shArr = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0, -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02]
 var shArrIndex = 0
@@ -191,6 +224,30 @@ var mainInterval = setInterval(() => {
             GOBLINS[i].x, GOBLINS[i].y, GOBLINS[i].orientation, shArr[Math.floor(GOBLINS[i].shIndex)], 0
         )
     
+    }
+
+    for(let i = 0; i<PROJECTILES.amount; i++){
+
+        if(PROJECTILES[i].x < canvas.width + 100 || PROJECTILES.y < canvas.height + 100 || PROJECTILES.x > -100 || PROJECTILES.y > -100){
+           
+            switch(PROJECTILES[i].type){
+                case 'clock':
+                    displayClock(PROJECTILES[i].x, PROJECTILES[i].y, PROJECTILES[i].rotation + (PROJECTILES[i].spin * Math.PI)/180)
+                    break
+
+            }
+
+        
+            PROJECTILES[i].x += Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clockSpeed
+            PROJECTILES[i].y += Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clockSpeed
+
+            PROJECTILES[i].spin += PROJECTILES.clockSpeed
+    
+            for(let g = 1; g<=3; g++){
+
+            }
+
+        }
     }
 
     customCursor(CURSOR.x, CURSOR.y)
