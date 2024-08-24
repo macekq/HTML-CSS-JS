@@ -37,6 +37,7 @@ var PLAYER = {
 }
 var PROJECTILES = {
     clockSpeed: 7,
+    clockKnockback: 16,
     amount: 0
 }
 var CURSOR = {
@@ -180,8 +181,6 @@ window.addEventListener('mousedown', e => {
         PROJECTILES[crr].rotation = PLAYER.orientation - Math.PI/2
         PROJECTILES[crr].spin = 0
         PROJECTILES[crr].type = 'clock'
-    
-        console.log(PROJECTILES, PLAYER.x , PLAYER.y, PLAYER.orientation)
     }
 })
 var shoulderRotation = 0
@@ -245,6 +244,16 @@ var mainInterval = setInterval(() => {
     
             for(let g = 1; g<=3; g++){
 
+                if(GOBLINS[g].x - 24 < PROJECTILES[i].x + 30 && GOBLINS[g].x + 24 > PROJECTILES[i].x){ //hitboxy hodin a agoblinů s tolerancí (+-10px)
+
+                    if(GOBLINS[g].y + 24 > PROJECTILES[i].y - 30 && GOBLINS[g].y - 24 < PROJECTILES[i].y +30){
+
+                        let subtX = Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clockKnockback
+                        let subtY = Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clockKnockback
+
+                        GOBLINS[g].x += subtX, GOBLINS[g].y += subtY
+                    }
+                } 
             }
 
         }
