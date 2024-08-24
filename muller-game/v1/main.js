@@ -10,17 +10,20 @@ var GOBLINS = {
     1:{
         x: 200, y: 200,
         shIndex: 3,
-        atack: 0
+        atack: 0,
+        health: 50
     },
     2:{
         x: 200, y:600,
         shIndex: 0,
-        atack: 0
+        atack: 0,
+        health: 50
     },
     3:{
         x: 200, y: 1000,
         shIndex: 9,
-        atack: 0
+        atack: 0,
+        health: 50
     }
 }
 var PLAYER = {
@@ -36,8 +39,11 @@ var PLAYER = {
     health: 100
 }
 var PROJECTILES = {
-    clockSpeed: 7,
-    clockKnockback: 16,
+    clock: {
+        speed: 7,
+        knockback: 10,
+        damage: 3
+    },
     amount: 0
 }
 var CURSOR = {
@@ -170,7 +176,6 @@ window.addEventListener('keyup', e => {
 
 window.addEventListener('mousedown', e => {
 
-    console.log(e.clientX, e.clientY)
     if(e.button == 2){
         
         let crr = PROJECTILES.amount
@@ -181,6 +186,7 @@ window.addEventListener('mousedown', e => {
         PROJECTILES[crr].rotation = PLAYER.orientation - Math.PI/2
         PROJECTILES[crr].spin = 0
         PROJECTILES[crr].type = 'clock'
+        PROJECTILES[crr].entitiesHit = 0
     }
 })
 var shoulderRotation = 0
@@ -209,53 +215,66 @@ var mainInterval = setInterval(() => {
 
     for(let i = 1; i<=3; i++){
         
-        GOBLINS[i].orientation = determineOrientation(GOBLINS[i].x, GOBLINS[i].y, PLAYER.x, PLAYER.y)
+        if(GOBLINS[i].health > 0){
 
-        let toAddX = Math.sin(GOBLINS[i].orientation) * GOBLINS.speed
-        let toAddY = Math.cos(GOBLINS[i].orientation) * GOBLINS.speed
+            GOBLINS[i].orientation = determineOrientation(GOBLINS[i].x, GOBLINS[i].y, PLAYER.x, PLAYER.y)
 
-        GOBLINS[i].x -= toAddX, GOBLINS[i].y += toAddY
-        
-        GOBLINS[i].shIndex += 0.7
-        GOBLINS[i].shIndex %= shArr.length
+            let toAddX = Math.sin(GOBLINS[i].orientation) * GOBLINS.speed
+            let toAddY = Math.cos(GOBLINS[i].orientation) * GOBLINS.speed
 
-        displayGoblin(
-            GOBLINS[i].x, GOBLINS[i].y, GOBLINS[i].orientation, shArr[Math.floor(GOBLINS[i].shIndex)], 0
-        )
+            GOBLINS[i].x -= toAddX, GOBLINS[i].y += toAddY
+
+            GOBLINS[i].shIndex += 0.7
+            GOBLINS[i].shIndex %= shArr.length
+
+            displayGoblin(
+                GOBLINS[i].x, GOBLINS[i].y, GOBLINS[i].orientation, shArr[Math.floor(GOBLINS[i].shIndex)], 0, GOBLINS[i].health
+            )
+        }
     
     }
 
     for(let i = 0; i<PROJECTILES.amount; i++){
 
-        if(PROJECTILES[i].x < canvas.width + 100 || PROJECTILES.y < canvas.height + 100 || PROJECTILES.x > -100 || PROJECTILES.y > -100){
-           
-            switch(PROJECTILES[i].type){
-                case 'clock':
-                    displayClock(PROJECTILES[i].x, PROJECTILES[i].y, PROJECTILES[i].rotation + (PROJECTILES[i].spin * Math.PI)/180)
-                    break
+        if(PROJECTILES[i].entitiesHit < 5){
 
-            }
+            if(PROJECTILES[i].x < canvas.width + 100 || PROJECTILES.y < canvas.height + 100 || PROJECTILES.x > -100 || PROJECTILES.y > -100){
+            
+                switch(PROJECTILES[i].type){
+                    case 'clock':
+                        displayClock(PROJECTILES[i].x, PROJECTILES[i].y, PROJECTILES[i].rotation + (PROJECTILES[i].spin * Math.PI)/180)
+                        break
 
+                }
+
+            
+                PROJECTILES[i].x += Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clock.speed
+                PROJECTILES[i].y += Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clock.speed
+
+                PROJECTILES[i].spin += PROJECTILES.clock.speed
         
-            PROJECTILES[i].x += Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clockSpeed
-            PROJECTILES[i].y += Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clockSpeed
+                for(let g = 1; g<=3; g++){
 
-            PROJECTILES[i].spin += PROJECTILES.clockSpeed
-    
-            for(let g = 1; g<=3; g++){
+                    if(GOBLINS[g].health > 0){
 
-                if(GOBLINS[g].x - 24 < PROJECTILES[i].x + 30 && GOBLINS[g].x + 24 > PROJECTILES[i].x){ //hitboxy hodin a agoblinů s tolerancí (+-10px)
+                        if(GOBLINS[g].x - 24 < PROJECTILES[i].x + 30 && GOBLINS[g].x + 24 > PROJECTILES[i].x){ //hitboxy hodin a agoblinů s tolerancí (+-10px)
 
-                    if(GOBLINS[g].y + 24 > PROJECTILES[i].y - 30 && GOBLINS[g].y - 24 < PROJECTILES[i].y +30){
+                            if(GOBLINS[g].y + 24 > PROJECTILES[i].y - 30 && GOBLINS[g].y - 24 < PROJECTILES[i].y +30){
 
-                        let subtX = Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clockKnockback
-                        let subtY = Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clockKnockback
+                                let subtX = Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clock.knockback
+                                let subtY = Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clock.knockback
 
-                        GOBLINS[g].x += subtX, GOBLINS[g].y += subtY
+                                GOBLINS[g].x += subtX, GOBLINS[g].y += subtY
+
+                                GOBLINS[g].health -= PROJECTILES.clock.damage
+
+                                PROJECTILES[i].entitiesHit++
+
+                            }
+                        }
                     }
-                } 
+                }
             }
-
         }
     }
 

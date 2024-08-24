@@ -1,4 +1,4 @@
-function displayGoblin(X, Y, rotation, addedMovement, atackStage){
+function displayGoblin(X, Y, rotation, addedMovement, atackStage, health){
 
     ctx.save()
     ctx.translate(X, Y)
@@ -22,6 +22,9 @@ function displayGoblin(X, Y, rotation, addedMovement, atackStage){
     ctx.strokeRect(-32/2, -32/2, 32, 32)
 
     ctx.restore()
+
+    ctx.fillStyle = 'red'
+    ctx.fillRect(X-20, Y-40, (40*health)/50, 5)
 
     if(document.getElementById('displayDestination').checked){
         ctx.beginPath()
