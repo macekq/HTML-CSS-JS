@@ -36,15 +36,26 @@ var PLAYER = {
         left: false, right: false
     },
     speed: 2,
-    health: 100
+    health: 100,
+    rangeWepon: 'clock',
+    meleeWepon: 'sesitOdMamy'
 }
 var PROJECTILES = {
-    clock: {
+    'clock': {
         speed: 7,
         knockback: 10,
-        damage: 3
+        damage: 3,
+        reaload: 1000, //1s
+        ready: true
     },
     amount: 0
+}
+var MELEE = {
+    'sesitOdMamy':{
+        range: 120, //60deg na kazdou stranu
+        reaload: 400, //0,4s
+        ready: true
+    }
 }
 var CURSOR = {
     x: -50, y: -50
@@ -129,6 +140,22 @@ function displayHealth(){
     healthElement.innerText = PLAYER.health
 }
 
+function partCircle(x, y, startAngle, endAngle, radius){
+
+    ctx.save()
+    ctx.beginPath();
+    
+    // Draw the arc
+    ctx.arc(x, y, radius, startAngle, endAngle);
+
+    // Set the line width and stroke color
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = 'rgba(255,0,0,0.4)';
+
+    // Stroke the arc (outline it)
+    ctx.stroke();
+    ctx.restore()
+}
 
 displayHealth()
 
@@ -178,20 +205,32 @@ window.addEventListener('mousedown', e => {
 
     if(e.button == 2){
         
-        let crr = PROJECTILES.amount
-        PROJECTILES.amount++
+        if(PROJECTILES[PLAYER.rangeWepon].ready){
+           
+            let crr = PROJECTILES.amount
+            PROJECTILES.amount++
 
-        PROJECTILES[crr] = {}
-        PROJECTILES[crr].x = PLAYER.x, PROJECTILES[crr].y = PLAYER.y
-        PROJECTILES[crr].rotation = PLAYER.orientation - Math.PI/2
-        PROJECTILES[crr].spin = 0
-        PROJECTILES[crr].type = 'clock'
-        PROJECTILES[crr].entitiesHit = 0
+            PROJECTILES[crr] = {}
+            PROJECTILES[crr].x = PLAYER.x, PROJECTILES[crr].y = PLAYER.y
+            PROJECTILES[crr].rotation = PLAYER.orientation - Math.PI/2
+            PROJECTILES[crr].spin = 0
+            PROJECTILES[crr].type = PLAYER.rangeWepon
+            PROJECTILES[crr].entitiesHit = 0
+        
+            PROJECTILES[PLAYER.rangeWepon].ready = false
+            setTimeout(() => {
+                PROJECTILES[PLAYER.rangeWepon].ready = true
+            }, PROJECTILES[PLAYER.rangeWepon].reaload);
+
+        }
     }
 })
 var shoulderRotation = 0
 const shArr = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0, -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02]
 var shArrIndex = 0
+
+var meleeWeponOrientation = -Math.PI/3
+
 var mainInterval = setInterval(() => {
     
     if(PLAYER.movement.left) PLAYER.x -= PLAYER.speed
@@ -236,49 +275,63 @@ var mainInterval = setInterval(() => {
 
     for(let i = 0; i<PROJECTILES.amount; i++){
 
-        if(PROJECTILES[i].entitiesHit < 5){
-
-            if(PROJECTILES[i].x < canvas.width + 100 || PROJECTILES.y < canvas.height + 100 || PROJECTILES.x > -100 || PROJECTILES.y > -100){
-            
-                switch(PROJECTILES[i].type){
-                    case 'clock':
-                        displayClock(PROJECTILES[i].x, PROJECTILES[i].y, PROJECTILES[i].rotation + (PROJECTILES[i].spin * Math.PI)/180)
-                        break
-
-                }
-
-            
-                PROJECTILES[i].x += Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clock.speed
-                PROJECTILES[i].y += Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clock.speed
-
-                PROJECTILES[i].spin += PROJECTILES.clock.speed
+        if(PROJECTILES[i].x < canvas.width + 100 || PROJECTILES.y < canvas.height + 100 || PROJECTILES.x > -100 || PROJECTILES.y > -100){
         
-                for(let g = 1; g<=3; g++){
+            switch(PROJECTILES[i].type){
+                
+                case 'clock':
 
-                    if(GOBLINS[g].health > 0){
+                    if(PROJECTILES[i].entitiesHit < 5){
 
-                        if(GOBLINS[g].x - 24 < PROJECTILES[i].x + 30 && GOBLINS[g].x + 24 > PROJECTILES[i].x){ //hitboxy hodin a agoblinů s tolerancí (+-10px)
+                        displayClock(PROJECTILES[i].x, PROJECTILES[i].y, PROJECTILES[i].rotation + (PROJECTILES[i].spin * Math.PI)/180)
+                        
+                        for(let g = 1; g<=3; g++){
 
-                            if(GOBLINS[g].y + 24 > PROJECTILES[i].y - 30 && GOBLINS[g].y - 24 < PROJECTILES[i].y +30){
-
-                                let subtX = Math.cos(PROJECTILES[i].rotation) * PROJECTILES.clock.knockback
-                                let subtY = Math.sin(PROJECTILES[i].rotation) * PROJECTILES.clock.knockback
-
-                                GOBLINS[g].x += subtX, GOBLINS[g].y += subtY
-
-                                GOBLINS[g].health -= PROJECTILES.clock.damage
-
-                                PROJECTILES[i].entitiesHit++
-
+                            if(GOBLINS[g].health > 0){
+        
+                                if(GOBLINS[g].x - 24 < PROJECTILES[i].x + 30 && GOBLINS[g].x + 24 > PROJECTILES[i].x){ //hitboxy hodin a agoblinů s tolerancí (+-10px)
+        
+                                    if(GOBLINS[g].y + 24 > PROJECTILES[i].y - 30 && GOBLINS[g].y - 24 < PROJECTILES[i].y +30){
+        
+                                        let subtX = Math.cos(PROJECTILES[i].rotation) * PROJECTILES['clock'].knockback
+                                        let subtY = Math.sin(PROJECTILES[i].rotation) * PROJECTILES['clock'].knockback
+        
+                                        GOBLINS[g].x += subtX, GOBLINS[g].y += subtY
+        
+                                        GOBLINS[g].health -= PROJECTILES['clock'].damage
+        
+                                        PROJECTILES[i].entitiesHit++
+                                        
+                                        PROJECTILES[i].spin += PROJECTILES['clock'].speed
+                                    }
+                                }
                             }
                         }
+                    
+                        
+                        PROJECTILES[i].x += Math.cos(PROJECTILES[i].rotation) * PROJECTILES['clock'].speed
+                        PROJECTILES[i].y += Math.sin(PROJECTILES[i].rotation) * PROJECTILES['clock'].speed
                     }
-                }
+                    break
+                
+                case 'trakturek':
+
+                    break
+
             }
         }
     }
 
+    if(meleeWeponOrientation > (Math.PI)/3){
+        meleeWeponOrientation -= (Math.PI*2)/3
+    }else{
+        meleeWeponOrientation += 0.2 
+    }
+
     customCursor(CURSOR.x, CURSOR.y)
+    displayMelee(PLAYER.x, PLAYER.y, PLAYER.orientation + meleeWeponOrientation, 100)
+    partCircle(PLAYER.x, PLAYER.y, PLAYER.orientation-Math.PI/3 - Math.PI/2, PLAYER.orientation+Math.PI/3 - Math.PI/2, 100)
+
 },15)
 
 document.addEventListener('contextmenu', function(e) {
