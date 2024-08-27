@@ -54,8 +54,15 @@ var MELEE = {
     'sesitOdMamy':{
         range: 120, //60deg na kazdou stranu
         reaload: 400, //0,4s
-        ready: true
-    }
+        ready: true,
+        crrAngle: null,
+        active: false,
+        radius: 120,
+        knockback: 10,
+        damage: 1 // x10 pssst
+    },
+    swingPhase: 0,
+    entitiesHit: 0
 }
 var CURSOR = {
     x: -50, y: -50
@@ -67,8 +74,6 @@ const canvasWindowRatio = () => {
 canvasWindowRatio()
 
 function drawCharacter(addedMovement){
-
-    ctx.clearRect(0,0,canvas.width,canvas.height)
 
     ctx.save()
     ctx.translate(PLAYER.x, PLAYER.y)
@@ -157,6 +162,25 @@ function partCircle(x, y, startAngle, endAngle, radius){
     ctx.restore()
 }
 
+function inRange(x1, y1 ,x2 ,y2, radius){
+
+    let z = Math.sqrt((x1 -x2)**2 + (y1 -y2)**2)
+
+    if(z <= radius) return true
+
+    return false
+}
+
+function inView(x1, y1, x2, y2, viewRange, orientation){
+
+    let angle = Math.atan((y1 -y2) / (x1 -x2))
+
+    if(angle<0) angle *= -1
+    if(angle+orientation <= viewRange/2) return true
+    
+    return false
+}
+
 displayHealth()
 
 drawCharacter(0)
@@ -203,6 +227,31 @@ window.addEventListener('keyup', e => {
 
 window.addEventListener('mousedown', e => {
 
+
+    if(e.button  == 0 && MELEE[PLAYER.meleeWepon].ready){
+
+        MELEE[PLAYER.meleeWepon].active = true
+
+        MELEE.swingPhase = (Math.PI*(-MELEE[PLAYER.meleeWepon].range/2))/180
+
+        setTimeout(() => {
+            MELEE[PLAYER.meleeWepon].active = false
+        }, 11*16)
+
+        let addAngle = (Math.PI*(MELEE[PLAYER.meleeWepon].range)/180)/10
+        
+        for(let i = 1; i<=10; i++){
+
+            setTimeout(() => {
+
+                MELEE.swingPhase += addAngle
+
+            }, i*16)
+
+        }
+
+    }
+
     if(e.button == 2){
         
         if(PROJECTILES[PLAYER.rangeWepon].ready){
@@ -224,15 +273,22 @@ window.addEventListener('mousedown', e => {
 
         }
     }
+
+    if(e.button == 1){
+
+        console.log(
+            inView(PLAYER.x, PLAYER.y, GOBLINS[1].x, GOBLINS[1].y, (Math.PI*60)/180, PLAYER.orientation)
+        )
+    }
 })
 var shoulderRotation = 0
 const shArr = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0, -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02]
 var shArrIndex = 0
 
-var meleeWeponOrientation = -Math.PI/3
-
 var mainInterval = setInterval(() => {
-    
+
+    ctx.clearRect(0,0,canvas.width,canvas.height)
+
     if(PLAYER.movement.left) PLAYER.x -= PLAYER.speed
     if(PLAYER.movement.right) PLAYER.x += PLAYER.speed
     if(PLAYER.movement.up) PLAYER.y -= PLAYER.speed
@@ -248,9 +304,17 @@ var mainInterval = setInterval(() => {
     shArrIndex %= shArr.length
         
     shoulderRotation = shArr[Math.floor(shArrIndex)]
-    
+
+
     playerOrientation(CURSOR.x, CURSOR.y)
+
+   if(MELEE[PLAYER.meleeWepon].active) displayMelee(PLAYER.x, PLAYER.y, PLAYER.orientation + MELEE.swingPhase, MELEE[PLAYER.meleeWepon].radius)
     drawCharacter(shoulderRotation)
+
+    customCursor(CURSOR.x, CURSOR.y)
+    partCircle(PLAYER.x, PLAYER.y, PLAYER.orientation-Math.PI/3 - Math.PI/2, PLAYER.orientation+Math.PI/3 - Math.PI/2, MELEE[PLAYER.meleeWepon].radius)
+
+
 
     for(let i = 1; i<=3; i++){
         
@@ -269,6 +333,19 @@ var mainInterval = setInterval(() => {
             displayGoblin(
                 GOBLINS[i].x, GOBLINS[i].y, GOBLINS[i].orientation, shArr[Math.floor(GOBLINS[i].shIndex)], 0, GOBLINS[i].health
             )
+            
+            let x1 = PLAYER.x, y1 = PLAYER.y
+            let x2 = GOBLINS[i].x, y2 = GOBLINS[i].y
+
+            if(inRange(x1, y1, x2, y2, MELEE[PLAYER.meleeWepon].radius + 20) && MELEE[PLAYER.meleeWepon].active && inView(x1, y1, x2, y2, MELEE[PLAYER.meleeWepon].range, PLAYER.orientation)){
+                
+                let subtX = Math.cos(GOBLINS[i].orientation) * MELEE[PLAYER.meleeWepon].knockback
+                let subtY = Math.sin(GOBLINS[i].orientation) * MELEE[PLAYER.meleeWepon].knockback   
+
+                GOBLINS[i].x -= subtX, GOBLINS[i].y += subtY
+
+                GOBLINS[i].health -= MELEE[PLAYER.meleeWepon].damage
+            }
         }
     
     }
@@ -302,9 +379,9 @@ var mainInterval = setInterval(() => {
         
                                         PROJECTILES[i].entitiesHit++
                                         
-                                        PROJECTILES[i].spin += PROJECTILES['clock'].speed
-                                    }
+                                    }                               
                                 }
+                                PROJECTILES[i].spin += PROJECTILES['clock'].speed/2
                             }
                         }
                     
@@ -321,16 +398,6 @@ var mainInterval = setInterval(() => {
             }
         }
     }
-
-    if(meleeWeponOrientation > (Math.PI)/3){
-        meleeWeponOrientation -= (Math.PI*2)/3
-    }else{
-        meleeWeponOrientation += 0.2 
-    }
-
-    customCursor(CURSOR.x, CURSOR.y)
-    displayMelee(PLAYER.x, PLAYER.y, PLAYER.orientation + meleeWeponOrientation, 100)
-    partCircle(PLAYER.x, PLAYER.y, PLAYER.orientation-Math.PI/3 - Math.PI/2, PLAYER.orientation+Math.PI/3 - Math.PI/2, 100)
 
 },15)
 
