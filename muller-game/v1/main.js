@@ -171,12 +171,13 @@ function inRange(x1, y1 ,x2 ,y2, radius){
     return false
 }
 
-function inView(x1, y1, x2, y2, viewRange, orientation){
+function inView(x1, y1, x2, y2, viewRange, orientation){ // in rads
 
     let angle = Math.atan((y1 -y2) / (x1 -x2))
-
+    
     if(angle<0) angle *= -1
-    if(angle+orientation <= viewRange/2) return true
+
+    if(angle >= Math.PI/2 - viewRange/2 + orientation) return true
     
     return false
 }
@@ -337,7 +338,7 @@ var mainInterval = setInterval(() => {
             let x1 = PLAYER.x, y1 = PLAYER.y
             let x2 = GOBLINS[i].x, y2 = GOBLINS[i].y
 
-            if(inRange(x1, y1, x2, y2, MELEE[PLAYER.meleeWepon].radius + 20) && MELEE[PLAYER.meleeWepon].active && inView(x1, y1, x2, y2, MELEE[PLAYER.meleeWepon].range, PLAYER.orientation)){
+            if(inRange(x1, y1, x2, y2, MELEE[PLAYER.meleeWepon].radius + 20) && MELEE[PLAYER.meleeWepon].active && inView(x1, y1, x2, y2, (MELEE[PLAYER.meleeWepon].range/180)*Math.PI, PLAYER.orientation)){
                 
                 let subtX = Math.cos(GOBLINS[i].orientation) * MELEE[PLAYER.meleeWepon].knockback
                 let subtY = Math.sin(GOBLINS[i].orientation) * MELEE[PLAYER.meleeWepon].knockback   
