@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trigometrie</title>
+</head>
+<style>
+    body{
+        background-color: rgb(32,32,32);
+        color: white;
+    }
+    canvas{
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 50vh; height: 50vh;
+
+        transform: translate(-50%, -50%);
+
+        background-color: grey;
+    }
+</style>
+<body>
+    
+    <input id="x1" type="number">x1<br>
+    <input id="y1" type="number">y1<br><br>
+    <input id="x2" type="number">x2<br>
+    <input id="y2" type="number">y2<br><br>
+    <input id="range" type="number">range<br>
+    <input id="rotation" type="number">rotation<br>
+    <br><br>
+    <button onclick="logData()">log data</button>
+
+    <canvas id="myCanvas" height="500px" width="500px"></canvas>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
