@@ -278,7 +278,7 @@ window.addEventListener('mousedown', e => {
     if(e.button == 1){
 
         console.log(
-            inView(PLAYER.x, PLAYER.y, GOBLINS[1].x, GOBLINS[1].y, (Math.PI*60)/180, PLAYER.orientation)
+            'correct player orientation:', PLAYER.orientation*180/Math.PI + 90
         )
     }
 })
