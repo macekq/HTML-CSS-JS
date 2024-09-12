@@ -1,14 +1,25 @@
-/** @type {HTMLCanvasElement} */
-const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
-
 var TABLE = {
     size: 0
 }
 
-function makeTable(){
+function createField(){
     
     TABLE.size = parseInt(document.getElementById('fieldSize').value)
 
+    for(let i = 0; i<TABLE.size; i++){
+        
+        let row = document.createElement('tr')
+
+        for(let j = 0; j<TABLE.size; j++){
+
+            let slot = document.createElement('th')
+            slot.id = `${i}-${j}`
+
+            row.appendChild(slot)
+        }
+
+        document.getElementById('field').appendChild(row)
+
+    }
     
 }

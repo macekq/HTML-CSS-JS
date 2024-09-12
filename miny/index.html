@@ -15,6 +15,7 @@
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
         width: 72vh; height: 72vh;
+        max
         
         background-color: black;
     }
@@ -39,8 +40,10 @@
 
     <div id="menu">
         <input id="fieldSize" type="number" value="5"> field length<br>
-        <input id="mines" type="number" value="1"> amount of mines
+        <input id="mines" type="number" value="1"> amount of mines<br>
+        <button onclick="createField()">create table</button>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
