@@ -29,12 +29,24 @@
         max-width: 100%; max-height: 100%;
         border: solid black 0.1vh;
         background-color: grey;
-        
+
+        position: relative;
+
         box-shadow: inset 0.7vh 0.7vh 0 rgb(80,80,80),inset -0.7vh -0.7vh 0 rgb(80,80,80);
     }
     #field th:hover{
         box-shadow: inset 0.5vh 0.5vh 0 rgb(80,80,80),inset -0.5vh -0.5vh 0 rgb(80,80,80);
     }
+    /* #field th div{
+        position: relative;
+        background-color: gray;
+    }
+    #field th div{
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%; height: 50%;
+        position: absolute;
+    } */
     @media(orientation: portrait){
         #field{
             width: 72vw; height: 72vw;
@@ -55,7 +67,7 @@
     <div id="menu">
         <input id="fieldSize" type="number" value="5"> field length<br>
         <input id="mines" type="number" value="1"> amount of mines<br>
-        <button onclick="createField()">create table</button>
+        <button onclick="createField()">create new field</button>
     </div>
 
     <script src="script.js"></script>

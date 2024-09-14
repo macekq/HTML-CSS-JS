@@ -5,6 +5,7 @@ var FIELD = {
         loc:[],
         amount: 1
     }
+
 }
 function proKtty(){
 
@@ -24,6 +25,7 @@ function createField(){
         }
 
         FIELD.size = parseInt(document.getElementById('fieldSize').value)
+        FIELD.mines.loc = []
 
         for(let i = 0; i<FIELD.size; i++){
             
@@ -34,7 +36,6 @@ function createField(){
 
                 let slot = document.createElement('th')
                 slot.id = `cell${i}-${j}`
-                slot.innerText = '1'
 
                 row.appendChild(slot)
             }
@@ -54,6 +55,7 @@ function includesArr(mainArr, arr){
     return false
 }
 function placeMines(){
+
     FIELD.mines.amount = parseInt(document.getElementById('mines').value)
 
     while(FIELD.mines.amount != FIELD.mines.loc.length){
@@ -73,6 +75,8 @@ function placeMines(){
 
     for(let mine of FIELD.mines.loc){
 
-        document.getElementById(`cell${mine[0]}-${mine[1]}`).innerText = 'x'
+        document.getElementById(`cell${mine[0]}-${mine[1]}`).style.backgroundColor = 'red'
     }
 }
+
+createField()
