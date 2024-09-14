@@ -6,16 +6,21 @@
     <title>bomby</title>
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
     body{
         background-color: black;
         color: white;
     }
     #field{
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.6em;
+
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
         width: 72vh; height: 72vh;
-        max
         
         background-color: black;
     }
@@ -25,11 +30,20 @@
         border: solid black 0.1vh;
         background-color: grey;
         
+        box-shadow: inset 0.7vh 0.7vh 0 rgb(80,80,80),inset -0.7vh -0.7vh 0 rgb(80,80,80);
+    }
+    #field th:hover{
         box-shadow: inset 0.5vh 0.5vh 0 rgb(80,80,80),inset -0.5vh -0.5vh 0 rgb(80,80,80);
     }
     @media(orientation: portrait){
-        canvas{
+        #field{
             width: 72vw; height: 72vw;
+        }
+        #field th{
+            box-shadow: inset 0.7vw 0.7vw 0 rgb(80,80,80),inset -0.7vw -0.7vw 0 rgb(80,80,80);
+        }
+        #field th:hover{
+            box-shadow: inset 0.4vw 0.4vw 0 rgb(80,80,80),inset -0.4vw -0.4vw 0 rgb(80,80,80);
         }
     }
 </style>
