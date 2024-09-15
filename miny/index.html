@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bomby</title>
+    <title>minesweeper</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
@@ -28,7 +28,7 @@
         margin: 0;
         max-width: 100%; max-height: 100%;
         border: solid black 0.1vh;
-        background-color: grey;
+        background-color: rgb(50,50,50);
 
         position: relative;
 
@@ -67,7 +67,8 @@
     <div id="menu">
         <input id="fieldSize" type="number" value="5"> field length<br>
         <input id="mines" type="number" value="1"> amount of mines<br>
-        <button onclick="createField()">create new field</button>
+        <button onclick="createField()" >create new field</button><br>
+        <input type="checkbox" id="showMines"> display ans
     </div>
 
     <script src="script.js"></script>
