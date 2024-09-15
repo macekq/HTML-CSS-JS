@@ -118,7 +118,7 @@ function showNums(){
             if(includesArr(FIELD.mines.loc, [j, i])){
 
                 slot.style.backgroundColor = color == 'grey' ? 'red' : color
-                slot.innerText = 'x'
+                slot.innerText = '9'
             
             }else if(!includesArr(FIELD.mines.around, [j, i])){
 
@@ -165,7 +165,7 @@ function userAction(){
             FIELD.visibleCells.push([X, Y])
             break
 
-        case 'x':
+        case '9':
             
             console.log(FIELD.visibleCells.length)
             if(FIELD.visibleCells.length == 0){
