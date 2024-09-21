@@ -194,7 +194,13 @@ window.addEventListener('mousedown', e => {
         if(e.clientX > ShapeMenu.space && e.clientX < ShapeMenu.space*2) num = 1
         else if(e.clientX > ShapeMenu.space*2 && e.clientX < ShapeMenu.space*3) num = 2
         else if(e.clientX > ShapeMenu.space*3 && e.clientX < ShapeMenu.space*4) num = 3
-        console.log(num)
+        
+    }else if(window.innerHeight < window.innerWidth && e.clientX > window.innerWidth/2 + window.innerHeight/2 + ShapeMenu.size){
+
+        if(e.clientY > ShapeMenu.space && e.clientY < ShapeMenu.space*2) num = 1
+        else if(e.clientY > ShapeMenu.space*2 && e.clientY < ShapeMenu.space*3) num = 2
+        else if(e.clientY > ShapeMenu.space*3 && e.clientY < ShapeMenu.space*4) num = 3
+        
     }
         
     if(ShapeMenu[num].mouse){
