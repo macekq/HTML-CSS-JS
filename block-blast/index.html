@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lukiho block blast</title>
+</head>
+<style>
+    body{
+        background-color: rgb(72,72,72);
+        overflow: hidden;
+    }
+    canvas{
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 101vw; height: 101vh;
+        background-color: rgb(36,36,36);
+    }
+    #info{
+        display: flex;
+        position: absolute;
+        color: white;
+    }
+</style>
+<body>
+    
+    <canvas id="myCanvas"></canvas>
+
+    <div id="info">
+        <div>score: </div><div id="score">0</div>
+    </div>
+
+    <script src="shapes.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
