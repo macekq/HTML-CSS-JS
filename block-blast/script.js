@@ -16,8 +16,11 @@ var SHAPE = {
 }
 var ShapeMenu = {
     size: window.innerWidth/32,
-    1:{},2:{},3:{}
+    1:{},2:{},3:{},
+
+    space: 0
 }
+
 function resizeCanvas(){
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
@@ -73,6 +76,7 @@ function createShapeMenu(){
             ShapeMenu[i].x = space*i
             ShapeMenu[i].y = Y
         }
+        ShapeMenu.space = space
     }else{
         let space = window.innerHeight/5, X = window.innerWidth/2 + window.innerHeight/2 + ShapeMenu.size
 
@@ -80,6 +84,7 @@ function createShapeMenu(){
             ShapeMenu[i].x = X
             ShapeMenu[i].y = space*i
         }
+        ShapeMenu.space = space
     }
 
     for(let i = 1; i<=3; i++){
@@ -131,6 +136,15 @@ function solidInside(rX, rY){
     return true
     
 }
+function lost(){
+
+    for(let x = 0; x<8; x++){
+        for(let y = 0; y<8; y++){
+
+
+        }
+    }
+}
 function snapping(){
 
     let rX = Math.floor((SHAPE.x - FIELD.x)/SHAPE.size), rY = Math.floor((SHAPE.y - FIELD.y)/SHAPE.size)
@@ -173,25 +187,29 @@ function clearSpace(){
 
 }
 window.addEventListener('mousedown', e => {
+    let num
 
-    for(let i = 1; i<=3; i++){
+    if(window.innerHeight > window.innerWidth && e.clientY > window.innerHeight/2 + window.innerWidth/2 + ShapeMenu.size){
+
+        if(e.clientX > ShapeMenu.space && e.clientX < ShapeMenu.space*2) num = 1
+        else if(e.clientX > ShapeMenu.space*2 && e.clientX < ShapeMenu.space*3) num = 2
+        else if(e.clientX > ShapeMenu.space*3 && e.clientX < ShapeMenu.space*4) num = 3
+        console.log(num)
+    }
         
-        if(ShapeMenu[i].mouse){
-            SHAPE.x = ShapeMenu[i].x
-            SHAPE.y = ShapeMenu[i].y
-            SHAPE.color = ShapeMenu[i].color
-            SHAPE.matrix = ShapeMenu[i].matrix
-            
-            SHAPE.ready = false
-            SHAPE.addedX = (e.clientX - SHAPE.x)*4
-            SHAPE.addedY = (e.clientY - SHAPE.y)*4
-            SHAPE.user = true
-            SHAPE.id = i
-            
-            ShapeMenu[i].ready = false
+    if(ShapeMenu[num].mouse){
+        SHAPE.x = ShapeMenu[num].x
+        SHAPE.y = ShapeMenu[num].y
+        SHAPE.color = ShapeMenu[num].color
+        SHAPE.matrix = ShapeMenu[num].matrix
         
-            break
-        }
+        SHAPE.ready = false
+        SHAPE.addedX = (e.clientX - SHAPE.x)*4
+        SHAPE.addedY = (e.clientY - SHAPE.y)*4
+        SHAPE.user = true
+        SHAPE.id = num
+        
+        ShapeMenu[num].ready = false
     }
 })
 window.addEventListener('mouseup', () => {
