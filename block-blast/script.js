@@ -237,12 +237,23 @@ window.addEventListener('mousedown', e => {
     }
 })
 window.addEventListener('touchstart', event => {
+    
     let num
 
-    event.preventDefault()
-
     let e = event.touches[0]
-
+//--------------------------------------------------------------------
+    let counter = 0
+    for(let i = 1; i<=3; i++){
+         
+        if(e.clientX > ShapeMenu[i].x && e.clientX < ShapeMenu[i].x + ShapeMenu.size*5 &&
+            e.clientY > ShapeMenu[i].y && e.clientY < ShapeMenu[i].y + ShapeMenu.size*5){
+                if(ShapeMenu[i].ready){
+                    ShapeMenu[i].mouse = true
+                    counter++
+                }else ShapeMenu[i].mouse = false
+            }
+    }
+//--------------------------------------------------------------------
     if(window.innerHeight > window.innerWidth && e.clientY > window.innerHeight/2 + window.innerWidth/2 + ShapeMenu.size){
 
         if(e.clientX > ShapeMenu.space && e.clientX < ShapeMenu.space*2) num = 1
@@ -417,7 +428,7 @@ window.addEventListener('mousemove', e => {
 })
 window.addEventListener('touchmove', event => {
     
-    event.preventDefault()
+    // event.preventDefault()
 
     let e = event.touches[0]
 
