@@ -236,8 +236,12 @@ window.addEventListener('mousedown', e => {
         ShapeMenu[num].ready = false
     }
 })
-window.addEventListener('touchstart', e => {
+window.addEventListener('touchstart', event => {
     let num
+
+    event.preventDefault()
+
+    let e = event.touches[0]
 
     if(window.innerHeight > window.innerWidth && e.clientY > window.innerHeight/2 + window.innerWidth/2 + ShapeMenu.size){
 
@@ -411,8 +415,12 @@ window.addEventListener('mousemove', e => {
         displayShapeMenu()
     }
 })
-window.addEventListener('touchmove', e => {
+window.addEventListener('touchmove', event => {
     
+    event.preventDefault()
+
+    let e = event.touches[0]
+
     let counter = 0
     for(let i = 1; i<=3; i++){
          
