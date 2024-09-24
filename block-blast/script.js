@@ -59,7 +59,7 @@ function displayShape(X, Y, size, color, matrix){
         for(let x = 0; x<5; x++){
 
             if(matrix[y][x] == 1){
-
+                            
                 ctx.fillRect(X + x*size, Y + y*size, size, size)
                 ctx.strokeRect(X + x*size, Y + y*size, size, size)
         
@@ -115,21 +115,18 @@ function displayMatrix(){
         }
     }
 }
-function solidInside(rX, rY){
+function solidInside(rX, rY, shapeMatrix){
 
     for(let y = 0; y<5; y++){
         for(let x = 0; x<5; x++){
 
-            if(SHAPE.matrix[y][x] == 1)
+            if(shapeMatrix[y][x] == 1)
                 try{
-                    
-                    if(MATRIX[rY + y][rX + x] == undefined || MATRIX[y + rY][x + rX] != 0) return false
-
+                    if(MATRIX[rY + y][rX + x] == undefined || MATRIX[y + rY][x + rX] != 0) return falses
+                
                 }catch(error){
-                    
                     return false
-                }
-            
+                }   
         }
     }
     
@@ -137,19 +134,41 @@ function solidInside(rX, rY){
     
 }
 function lost(){
+    
+    let matrixArr = []
 
-    for(let x = 0; x<8; x++){
-        for(let y = 0; y<8; y++){
+    for(let i = 1; i<=3; i++){
+        if(ShapeMenu[i].ready) matrixArr.push(ShapeMenu[i].matrix)
+    }
+    if(lost_fitShape(matrixArr)) return false
+    return true
+}
+function lost_fitShape(matrixArr){
+    
+    for(let shape of matrixArr){
+        
+        for(let x = -5; x<8; x++){
+            for(let y = -5; y<8; y++){
 
-
+                if(solidInside(x, y, shape)) return true
+            }
         }
     }
+    return false
 }
 function snapping(){
 
-    let rX = Math.floor((SHAPE.x - FIELD.x)/SHAPE.size), rY = Math.floor((SHAPE.y - FIELD.y)/SHAPE.size)
-    
-    if(solidInside(rX, rY)){
+    let rX = (SHAPE.x - FIELD.x)/SHAPE.size, rY = (SHAPE.y - FIELD.y)/SHAPE.size
+
+    if(rX%1 < 0.5) rX = Math.floor(rX)
+    else rX = Math.ceil(rX)
+
+    if(rY%1 < 0.5) rY = Math.floor(rY)
+    else rY = Math.ceil(rY)
+
+    console.log(rX, rY)
+
+    if(solidInside(rX, rY, SHAPE.matrix)){
         ctx.fillStyle = 'rgba(0,0,0,0.3)'
         for(let y = 0; y<5; y++){
             for(let x = 0; x<5; x++){
@@ -184,7 +203,6 @@ function clearSpace(){
             MATRIX[0][i]=0,MATRIX[1][i]=0,MATRIX[2][i]=0,MATRIX[3][i]=0,MATRIX[4][i]=0,MATRIX[5][i]=0,MATRIX[6][i]=0,MATRIX[7][i]=0
         }
     }
-
 }
 window.addEventListener('mousedown', e => {
     let num
@@ -218,6 +236,39 @@ window.addEventListener('mousedown', e => {
         ShapeMenu[num].ready = false
     }
 })
+window.addEventListener('touchstart', e => {
+    let num
+
+    if(window.innerHeight > window.innerWidth && e.clientY > window.innerHeight/2 + window.innerWidth/2 + ShapeMenu.size){
+
+        if(e.clientX > ShapeMenu.space && e.clientX < ShapeMenu.space*2) num = 1
+        else if(e.clientX > ShapeMenu.space*2 && e.clientX < ShapeMenu.space*3) num = 2
+        else if(e.clientX > ShapeMenu.space*3 && e.clientX < ShapeMenu.space*4) num = 3
+        
+    }else if(window.innerHeight < window.innerWidth && e.clientX > window.innerWidth/2 + window.innerHeight/2 + ShapeMenu.size){
+
+        if(e.clientY > ShapeMenu.space && e.clientY < ShapeMenu.space*2) num = 1
+        else if(e.clientY > ShapeMenu.space*2 && e.clientY < ShapeMenu.space*3) num = 2
+        else if(e.clientY > ShapeMenu.space*3 && e.clientY < ShapeMenu.space*4) num = 3
+        
+    }
+        
+    if(ShapeMenu[num].mouse){
+        SHAPE.x = ShapeMenu[num].x
+        SHAPE.y = ShapeMenu[num].y
+        SHAPE.color = ShapeMenu[num].color
+        SHAPE.matrix = ShapeMenu[num].matrix
+        
+        SHAPE.ready = false
+        SHAPE.addedX = (e.clientX - SHAPE.x)*4
+        SHAPE.addedY = (e.clientY - SHAPE.y)*4
+        SHAPE.user = true
+        SHAPE.id = num
+        
+        ShapeMenu[num].ready = false
+    }
+})
+
 window.addEventListener('mouseup', () => {
 
     if(SHAPE.user && SHAPE.ready){
@@ -226,7 +277,13 @@ window.addEventListener('mouseup', () => {
         SHAPE.user = false
         ShapeMenu[SHAPE.id].ready = false
 
-        let rX = Math.floor((SHAPE.x - FIELD.x)/SHAPE.size), rY = Math.floor((SHAPE.y - FIELD.y)/SHAPE.size)
+        let rX = (SHAPE.x - FIELD.x)/SHAPE.size, rY = (SHAPE.y - FIELD.y)/SHAPE.size
+
+        if(rX%1 < 0.5) rX = Math.floor(rX)
+        else rX = Math.ceil(rX)
+
+        if(rY%1 < 0.5) rY = Math.floor(rY)
+        else rY = Math.ceil(rY)
 
         for(let y = 0; y<5; y++){
             for(let x = 0; x<5; x++){
@@ -255,7 +312,66 @@ window.addEventListener('mouseup', () => {
     if(ShapeMenu[1].ready == false && ShapeMenu[2].ready == false && ShapeMenu[3].ready == false) createShapeMenu()
 
     clearSpace()
+
+    if(lost()){
+        setTimeout(() => {
+            window.alert('uz neni kam :(')
+            window.location.assign('https://2nejlepsiostravskyrapper.guru/block-blast/')
+        }, 1000)
+    }
 })
+window.addEventListener('touchend', () => {
+
+    if(SHAPE.user && SHAPE.ready){
+
+        SHAPE.ready = false
+        SHAPE.user = false
+        ShapeMenu[SHAPE.id].ready = false
+
+        let rX = (SHAPE.x - FIELD.x)/SHAPE.size, rY = (SHAPE.y - FIELD.y)/SHAPE.size
+
+        if(rX%1 < 0.5) rX = Math.floor(rX)
+        else rX = Math.ceil(rX)
+
+        if(rY%1 < 0.5) rY = Math.floor(rY)
+        else rY = Math.ceil(rY)
+
+        for(let y = 0; y<5; y++){
+            for(let x = 0; x<5; x++){
+
+                try{
+                    if(SHAPE.matrix[y][x] == 1){
+                        MATRIX[rY + y][rX + x] = SHAPE.color
+                    }
+                }catch(error){}
+            }
+        }
+
+        updateAll()
+    }else if(SHAPE.user){
+        
+        SHAPE.ready = false
+        SHAPE.user = false
+        ShapeMenu[SHAPE.id].ready = true
+    
+        ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
+        drawPlayingField()
+        displayMatrix()
+        displayShapeMenu()
+    }
+
+    if(ShapeMenu[1].ready == false && ShapeMenu[2].ready == false && ShapeMenu[3].ready == false) createShapeMenu()
+
+    clearSpace()
+
+    if(lost()){
+        setTimeout(() => {
+            window.alert('uz neni kam :(')
+            window.location.assign('https://2nejlepsiostravskyrapper.guru/block-blast/')
+        }, 1000)
+    }
+})
+
 window.addEventListener('mousemove', e => {
 
     let counter = 0
@@ -272,7 +388,46 @@ window.addEventListener('mousemove', e => {
     if(counter>0) canvas.style.cursor = 'pointer'
     else canvas.style.cursor = ''
 
-//-------------------------------------------------------
+    //-------------------------------------------------------
+
+    if(SHAPE.user){
+
+        SHAPE.x = e.clientX - SHAPE.addedX, SHAPE.y = e.clientY - SHAPE.addedY
+
+        ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
+
+        drawPlayingField()
+        displayMatrix()
+        snapping()
+    
+        displayShape(SHAPE.x, SHAPE.y, SHAPE.size, SHAPE.color, SHAPE.matrix)
+        displayShapeMenu()
+    
+    }else{
+        ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
+
+        drawPlayingField()
+        displayMatrix()
+        displayShapeMenu()
+    }
+})
+window.addEventListener('touchmove', e => {
+    
+    let counter = 0
+    for(let i = 1; i<=3; i++){
+         
+        if(e.clientX > ShapeMenu[i].x && e.clientX < ShapeMenu[i].x + ShapeMenu.size*5 &&
+            e.clientY > ShapeMenu[i].y && e.clientY < ShapeMenu[i].y + ShapeMenu.size*5){
+                if(ShapeMenu[i].ready){
+                    ShapeMenu[i].mouse = true
+                    counter++
+                }else ShapeMenu[i].mouse = false
+            }
+    }
+    if(counter>0) canvas.style.cursor = 'pointer'
+    else canvas.style.cursor = ''
+
+    //-------------------------------------------------------
 
     if(SHAPE.user){
 
