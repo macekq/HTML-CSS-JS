@@ -1,4 +1,4 @@
-window.addEventListener('touchmove', e => {    
+window.addEventListener('touchend', e => {    
 
     e.preventDefault()
 
