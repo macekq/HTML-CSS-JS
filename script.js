@@ -47,7 +47,7 @@ function hideLinks(){
         menu.style.height = '5vh'
         linkCnt.style.maxHeight = '5vh'
     }
-    menu.style.overflow = 'none'
+    menu.style.overflow = 'hidden'
 
     menuBtt.style.transform = ''
 
