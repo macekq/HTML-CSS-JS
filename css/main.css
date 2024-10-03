@@ -135,10 +135,9 @@ footer img{
     color: white;
 
     cursor: pointer;
-    transition: 0.8s;
 }
 .linkBox:hover{
-
+    text-decoration: underline;
 }
 .linkBox div{
     display: flex;
