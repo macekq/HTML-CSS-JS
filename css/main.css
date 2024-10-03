@@ -5,7 +5,6 @@ body{
     background: rgb(36,36,36);
     color: white;
     overflow: hidden;
-    
     margin: 0;
 }
 h1{
@@ -130,8 +129,21 @@ footer img{
     position: absolute;
     top: 100%; left: 100%;
     transform: translate(-100%, -100%);
+}
+.linkBox{
+    text-decoration: none;
+    color: white;
 
-    height: 50vw;
+    cursor: pointer;
+    transition: 0.8s;
+}
+.linkBox:hover{
+
+}
+.linkBox div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 @media (orientation: portrait){
     #st-img{
