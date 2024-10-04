@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>snehurka</title>
+</head>
+<style>
+    canvas{
+        position: absolute;
+        top: 0; left: 0;
+
+        background-image: linear-gradient(180deg, rgb(140, 140, 238), rgb(35, 150, 35), rgb(0, 100, 0));
+    }
+    #stats{
+        position: absolute;
+        top: 0; left: 100%;
+        transform: translateX(-100%);
+    }
+    #healthBar{
+        width: 50vw;
+        border: 0.1vh solid black;
+        border-radius: 10px;
+        margin: 1vh;
+        text-align: center;
+    }
+    #health{
+        width: 100%;
+        background-color: red;
+        border-radius: 10px;
+    }
+</style>
+<body>
+    <canvas id="myCanvas"></canvas>
+
+    <div id="stats">
+        <div id="healthBar"><div id="health">100</div></div>
+    </div>
+
+    <script src="func.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
