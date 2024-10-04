@@ -9,6 +9,7 @@
 }
 body{
     background-color: var(--bgColor);
+    color: var(--color);
     font-family: "Roboto", sans-serif;
 }
 #mainBox{
@@ -55,13 +56,17 @@ body{
 }
 #hledat div{
     position: relative;
-    top: 50%; left: 40%;
-    transform: translate(-70%, -35%);
+    height: 50%;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 #hledat{
     position: absolute;
     top: 80%; left: 25%;
     display: flex;
+
+    color: var(--color);
 
     font-size: 1.2em;
     width: 50%;
@@ -78,17 +83,49 @@ body{
     transition: 0.4s;
     box-shadow: 0 0 1vh var(--shadow);
 }
-#search h3{
-    
+#search nav{
+    text-align: center;
+    margin: 5%;
 }
 .polohy{
     margin-left: 15%;
     width: 70%;
 }
+#toggle{
+    position: absolute;
+    top: 1%; left: 1%;
 
+    background-color: var(--button);
+    width: 8vh; height: 4vh;
+    border-radius: 25px;
+    padding: .5vw;
+}
+#switch{
+    position: absolute;
+    top: 1%; left: 1%;
+    width: 8vh; height: 4vh;
+    opacity: 0;
+
+    cursor: pointer;
+    transition: 0.5s;
+}
+#toogleBall{
+    position: relative;
+    background-color: rgba(0,0,0,0.4);
+    height: 100%; width: 50%;
+    border-radius: 25px;
+
+    transition: 0.5s;
+}
 @media(orientation: portrait){
     #mainBox{
         max-width: 80vw;
         width: 60vh;
+    }
+    #toggle{
+        width: 8vw; height: 4vw;
+    }
+    #switch{
+        width: 8vw; height: 4vw;
     }
 }
