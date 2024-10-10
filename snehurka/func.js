@@ -2,11 +2,17 @@ function drawCinderella(addedMovement){
 
     ctx.save()
     ctx.translate(CINDERELLA.x, CINDERELLA.y)
-    ctx.rotate(CINDERELLA.orientation + addedMovement)
+    ctx.rotate(CINDERELLA.orientation + addedMovement/-2)
     
     ctx.fillStyle = 'lightblue'
     ctx.fillRect(-35, -25, 70, 50)
     ctx.fillRect(-25, -30, 50, 60)
+
+    ctx.restore()
+
+    ctx.save()
+    ctx.translate(CINDERELLA.x, CINDERELLA.y)
+    ctx.rotate(CINDERELLA.orientation + addedMovement)
 
     ctx.fillStyle = 'rgb(255, 215, 150)'
     ctx.fillRect(-32, -10, 64, 20)
@@ -16,11 +22,12 @@ function drawCinderella(addedMovement){
     ctx.fillRect(-26, -10, 52, 20)
 
     ctx.restore()
+
     ctx.save()
     ctx.translate(CINDERELLA.x, CINDERELLA.y)
     ctx.rotate(CINDERELLA.orientation)
 
-    ctx.fillStyle = 'rgb(255, 215, 150)'
+    ctx.fillStyle = 'rgb(255, 213, 171)'
     ctx.fillRect(-20, -20, 40, 40)
     ctx.strokeRect(-20, -20, 40, 40)
 
@@ -32,4 +39,23 @@ function drawCinderella(addedMovement){
     ctx.fillRect(-1, -10, 2, 30)
 
     ctx.restore()
+}
+function customCursor(X, Y){
+
+    ctx.save()
+    ctx.translate(X, Y)
+
+    ctx.fillStyle = 'white'
+    ctx.strokeStyle = 'black'
+
+    for(let i = 0; i<4; i++){
+
+        ctx.rotate(i*Math.PI/2)
+
+        ctx.fillRect(5,-2, 16, 5)
+        ctx.strokeRect(5, -2, 16, 5)
+    }
+
+    ctx.restore()
+
 }
