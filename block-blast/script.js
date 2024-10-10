@@ -205,35 +205,39 @@ function clearSpace(){
     }
 }
 window.addEventListener('mousedown', e => {
-    let num
 
-    if(window.innerHeight > window.innerWidth && e.clientY > window.innerHeight/2 + window.innerWidth/2 + ShapeMenu.size){
+    if(!document.getElementById('phone').checked){
+        let num
 
-        if(e.clientX > ShapeMenu.space && e.clientX < ShapeMenu.space*2) num = 1
-        else if(e.clientX > ShapeMenu.space*2 && e.clientX < ShapeMenu.space*3) num = 2
-        else if(e.clientX > ShapeMenu.space*3 && e.clientX < ShapeMenu.space*4) num = 3
-        
-    }else if(window.innerHeight < window.innerWidth && e.clientX > window.innerWidth/2 + window.innerHeight/2 + ShapeMenu.size){
+        if(window.innerHeight > window.innerWidth && e.clientY > window.innerHeight/2 + window.innerWidth/2 + ShapeMenu.size){
 
-        if(e.clientY > ShapeMenu.space && e.clientY < ShapeMenu.space*2) num = 1
-        else if(e.clientY > ShapeMenu.space*2 && e.clientY < ShapeMenu.space*3) num = 2
-        else if(e.clientY > ShapeMenu.space*3 && e.clientY < ShapeMenu.space*4) num = 3
-        
-    }
-        
-    if(ShapeMenu[num].mouse){
-        SHAPE.x = ShapeMenu[num].x
-        SHAPE.y = ShapeMenu[num].y
-        SHAPE.color = ShapeMenu[num].color
-        SHAPE.matrix = ShapeMenu[num].matrix
-        
-        SHAPE.ready = false
-        SHAPE.addedX = (e.clientX - SHAPE.x)*4
-        SHAPE.addedY = (e.clientY - SHAPE.y)*4
-        SHAPE.user = true
-        SHAPE.id = num
-        
-        ShapeMenu[num].ready = false
+            if(e.clientX > ShapeMenu.space && e.clientX < ShapeMenu.space*2) num = 1
+            else if(e.clientX > ShapeMenu.space*2 && e.clientX < ShapeMenu.space*3) num = 2
+            else if(e.clientX > ShapeMenu.space*3 && e.clientX < ShapeMenu.space*4) num = 3
+            
+        }else if(window.innerHeight < window.innerWidth && e.clientX > window.innerWidth/2 + window.innerHeight/2 + ShapeMenu.size){
+
+            if(e.clientY > ShapeMenu.space && e.clientY < ShapeMenu.space*2) num = 1
+            else if(e.clientY > ShapeMenu.space*2 && e.clientY < ShapeMenu.space*3) num = 2
+            else if(e.clientY > ShapeMenu.space*3 && e.clientY < ShapeMenu.space*4) num = 3
+            
+        }
+            
+        if(ShapeMenu[num].mouse){
+            SHAPE.x = ShapeMenu[num].x
+            SHAPE.y = ShapeMenu[num].y
+            SHAPE.color = ShapeMenu[num].color
+            SHAPE.matrix = ShapeMenu[num].matrix
+            
+            SHAPE.ready = false
+            SHAPE.addedX = (e.clientX - SHAPE.x)*4
+            SHAPE.addedY = (e.clientY - SHAPE.y)*4
+            SHAPE.user = true
+            SHAPE.id = num
+            
+            ShapeMenu[num].ready = false
+        }
+        console.log('mousedown')
     }
 })
 window.addEventListener('touchstart', event => {
@@ -268,6 +272,7 @@ window.addEventListener('touchstart', event => {
         
     }
         
+    console.log(num, ShapeMenu)
     if(ShapeMenu[num].mouse){
         SHAPE.x = ShapeMenu[num].x
         SHAPE.y = ShapeMenu[num].y
@@ -282,57 +287,64 @@ window.addEventListener('touchstart', event => {
         
         ShapeMenu[num].ready = false
     }
+    
 })
 
 window.addEventListener('mouseup', () => {
 
-    if(SHAPE.user && SHAPE.ready){
+    if(!document.getElementById('phone').checked){
 
-        SHAPE.ready = false
-        SHAPE.user = false
-        ShapeMenu[SHAPE.id].ready = false
+        if(SHAPE.user && SHAPE.ready){
 
-        let rX = (SHAPE.x - FIELD.x)/SHAPE.size, rY = (SHAPE.y - FIELD.y)/SHAPE.size
+            SHAPE.ready = false
+            SHAPE.user = false
+            ShapeMenu[SHAPE.id].ready = false
 
-        if(rX%1 < 0.5) rX = Math.floor(rX)
-        else rX = Math.ceil(rX)
+            let rX = (SHAPE.x - FIELD.x)/SHAPE.size, rY = (SHAPE.y - FIELD.y)/SHAPE.size
 
-        if(rY%1 < 0.5) rY = Math.floor(rY)
-        else rY = Math.ceil(rY)
+            if(rX%1 < 0.5) rX = Math.floor(rX)
+            else rX = Math.ceil(rX)
 
-        for(let y = 0; y<5; y++){
-            for(let x = 0; x<5; x++){
+            if(rY%1 < 0.5) rY = Math.floor(rY)
+            else rY = Math.ceil(rY)
 
-                try{
-                    if(SHAPE.matrix[y][x] == 1){
-                        MATRIX[rY + y][rX + x] = SHAPE.color
-                    }
-                }catch(error){}
+            for(let y = 0; y<5; y++){
+                for(let x = 0; x<5; x++){
+
+                    try{
+                        if(SHAPE.matrix[y][x] == 1){
+                            MATRIX[rY + y][rX + x] = SHAPE.color
+                        }
+                    }catch(error){}
+                }
             }
+
+            updateAll()
+        }else if(SHAPE.user){
+            
+            SHAPE.ready = false
+            SHAPE.user = false
+            ShapeMenu[SHAPE.id].ready = true
+            
+        
+            ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
+            drawPlayingField()
+            displayMatrix()
+            displayShapeMenu()
         }
 
-        updateAll()
-    }else if(SHAPE.user){
-        
-        SHAPE.ready = false
-        SHAPE.user = false
-        ShapeMenu[SHAPE.id].ready = true
-    
-        ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
-        drawPlayingField()
-        displayMatrix()
-        displayShapeMenu()
-    }
+        if(ShapeMenu[1].ready == false && ShapeMenu[2].ready == false && ShapeMenu[3].ready == false) createShapeMenu()
 
-    if(ShapeMenu[1].ready == false && ShapeMenu[2].ready == false && ShapeMenu[3].ready == false) createShapeMenu()
+        clearSpace()
 
-    clearSpace()
+        if(lost()){
+            setTimeout(() => {
+                window.alert('uz neni kam :(')
+                window.location.assign('https://2nejlepsiostravskyrapper.guru/block-blast/')
+            }, 1000)
+        }
+        console.log('mouseup')
 
-    if(lost()){
-        setTimeout(() => {
-            window.alert('uz neni kam :(')
-            window.location.assign('https://2nejlepsiostravskyrapper.guru/block-blast/')
-        }, 1000)
     }
 })
 window.addEventListener('touchend', () => {
@@ -368,13 +380,15 @@ window.addEventListener('touchend', () => {
         SHAPE.ready = false
         SHAPE.user = false
         ShapeMenu[SHAPE.id].ready = true
-    
+        console.log('jebne mi')
+
         ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
         drawPlayingField()
         displayMatrix()
         displayShapeMenu()
     }
 
+    console.log(ShapeMenu)
     if(ShapeMenu[1].ready == false && ShapeMenu[2].ready == false && ShapeMenu[3].ready == false) createShapeMenu()
 
     clearSpace()
@@ -385,45 +399,47 @@ window.addEventListener('touchend', () => {
             window.location.assign('https://2nejlepsiostravskyrapper.guru/block-blast/')
         }, 1000)
     }
+    console.log('touch ended')
 })
 
 window.addEventListener('mousemove', e => {
+    if(!document.getElementById('phone').checked){
+        let counter = 0
+        for(let i = 1; i<=3; i++){
+            
+            if(e.clientX > ShapeMenu[i].x && e.clientX < ShapeMenu[i].x + ShapeMenu.size*5 &&
+                e.clientY > ShapeMenu[i].y && e.clientY < ShapeMenu[i].y + ShapeMenu.size*5){
+                    if(ShapeMenu[i].ready){
+                        ShapeMenu[i].mouse = true
+                        counter++
+                    }else ShapeMenu[i].mouse = false
+                }
+        }
+        if(counter>0) canvas.style.cursor = 'pointer'
+        else canvas.style.cursor = ''
 
-    let counter = 0
-    for(let i = 1; i<=3; i++){
-         
-        if(e.clientX > ShapeMenu[i].x && e.clientX < ShapeMenu[i].x + ShapeMenu.size*5 &&
-            e.clientY > ShapeMenu[i].y && e.clientY < ShapeMenu[i].y + ShapeMenu.size*5){
-                if(ShapeMenu[i].ready){
-                    ShapeMenu[i].mouse = true
-                    counter++
-                }else ShapeMenu[i].mouse = false
-            }
-    }
-    if(counter>0) canvas.style.cursor = 'pointer'
-    else canvas.style.cursor = ''
+        //-------------------------------------------------------
 
-    //-------------------------------------------------------
+        if(SHAPE.user){
 
-    if(SHAPE.user){
+            SHAPE.x = e.clientX - SHAPE.addedX, SHAPE.y = e.clientY - SHAPE.addedY
 
-        SHAPE.x = e.clientX - SHAPE.addedX, SHAPE.y = e.clientY - SHAPE.addedY
+            ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
 
-        ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
+            drawPlayingField()
+            displayMatrix()
+            snapping()
+        
+            displayShape(SHAPE.x, SHAPE.y, SHAPE.size, SHAPE.color, SHAPE.matrix)
+            displayShapeMenu()
+        
+        }else{
+            ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
 
-        drawPlayingField()
-        displayMatrix()
-        snapping()
-    
-        displayShape(SHAPE.x, SHAPE.y, SHAPE.size, SHAPE.color, SHAPE.matrix)
-        displayShapeMenu()
-    
-    }else{
-        ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
-
-        drawPlayingField()
-        displayMatrix()
-        displayShapeMenu()
+            drawPlayingField()
+            displayMatrix()
+            displayShapeMenu()
+        }
     }
 })
 window.addEventListener('touchmove', event => {

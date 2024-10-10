@@ -99,6 +99,9 @@ body{
     width: 8vh; height: 4vh;
     border-radius: 25px;
     padding: .5vw;
+
+    min-width: 16px;
+    min-height: 8px;
 }
 #switch{
     position: absolute;
@@ -108,6 +111,9 @@ body{
 
     cursor: pointer;
     transition: 0.5s;
+
+    min-width: 16px;
+    min-height: 8px;
 }
 #toogleBall{
     position: relative;
