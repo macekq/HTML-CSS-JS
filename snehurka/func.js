@@ -59,6 +59,9 @@ function customCursor(X, Y){
     ctx.restore()
 
 }
-function drawOp(){
-    
+function drawOp(x, y, orientation, health){
+
+    ctx.save()
+    ctx.fillStyle = ['#99ccff','#00cc66','#ff9933','#333399','#9900cc','#ffcc66'][Math.floor(math.random()*6)]
+
 }
