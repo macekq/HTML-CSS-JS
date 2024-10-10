@@ -59,3 +59,6 @@ function customCursor(X, Y){
     ctx.restore()
 
 }
+function drawOp(){
+    
+}
