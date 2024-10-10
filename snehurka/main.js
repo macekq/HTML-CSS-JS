@@ -3,6 +3,7 @@ const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
 const rect = canvas.getBoundingClientRect()
+const colors = ['#99ccff','#00cc66','#ff9933','#333399','#9900cc','#ffcc66']
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -22,6 +23,9 @@ var CINDERELLA = {
         up: false, down: false, left: false, right: false
     }
 }
+var OPS = {
+    all:[0]
+}
 var CURSOR = {
     x: canvas.width/2, y: 0
 }
@@ -32,6 +36,42 @@ function playerOrientation(){
     Y -= CINDERELLA.y
 
     CINDERELLA.orientation = Math.atan2(Y, X) + Math.PI/2
+}
+function determineOrientation(x1, y1, x2, y2){
+    let X = x1 - rect.left, Y = y1 - rect.top
+
+    X -= x2
+    Y -= y2
+
+    return Math.atan2(Y, X) + Math.PI/2
+}
+function displayDwarfs(){
+
+    for(let i of OPS.all){
+        
+        try{
+            let ang = determineOrientation(OPS[i].x, OPS[i].y, CINDERELLA.x, CINDERELLA.y)
+            drawOp(OPS[i].x, OPS[i].y, ang, OPS[i].health, shArr[Math.floor(OPS[i].shIndex)], OPS[i].shirtColor, OPS[i].hatColor)
+        }catch(error){}
+    }
+}
+function createOp(X, Y){
+
+    let id = 0
+    while(OPS.all.includes(id)) id = Math.floor(Math.random()*1000)
+
+    OPS.all.push(id)
+
+    OPS[id] = {
+        x: X, y: Y,
+        shIndex: Math.floor(Math.random()*shArr.length),
+        orientation: determineOrientation(X, Y, CINDERELLA.x, CINDERELLA.y),
+        health: 100,
+
+        shirtColor: colors[Math.floor(Math.random()*colors.length)],
+        hatColor: colors[Math.floor(Math.random()*colors.length)]
+    }
+
 }
 window.addEventListener('mousemove', e => {
     CURSOR.x = e.clientX, CURSOR.y = e.clientY
@@ -80,6 +120,12 @@ var shoulderRotation = 0
 const shArr = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0, -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02]
 var shArrIndex = 0
 
+createOp(300,200)
+
+for(let i = 0; i<20; i++){
+    createOp(100*(i+1), 200)
+}
+
 var mainInterval = setInterval(() => {
 
     //pohyb hrace
@@ -100,9 +146,9 @@ var mainInterval = setInterval(() => {
     ctx.clearRect(0,0,canvas.width,canvas.height)
     drawCinderella(shArr[Math.floor(shArrIndex)])
 
+    displayDwarfs()
+
     //kurzor
     customCursor(CURSOR.x, CURSOR.y)
-
-    
 
 }, 15);

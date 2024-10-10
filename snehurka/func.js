@@ -59,9 +59,47 @@ function customCursor(X, Y){
     ctx.restore()
 
 }
-function drawOp(x, y, orientation, health){
+function drawOp(x, y, orientation, health, addedMovement, shirtColor, hatColor){
+
+    console.log(addedMovement, orientation)
 
     ctx.save()
-    ctx.fillStyle = ['#99ccff','#00cc66','#ff9933','#333399','#9900cc','#ffcc66'][Math.floor(math.random()*6)]
+    ctx.translate(x, y)
+    ctx.rotate(orientation + addedMovement)
 
+    ctx.fillStyle = 'rgb(255, 213, 171)'
+    ctx.fillRect(-26,-10,52,20)
+    ctx.fillStyle = shirtColor
+    ctx.fillRect(-22,-10,44,20)
+
+    ctx.restore()
+
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(orientation)
+
+    ctx.fillStyle = 'white'
+    ctx.fillRect(-12,8,24,16)
+    ctx.fillStyle = 'rgb(255, 213, 171)'
+    ctx.fillRect(-4,0,8,20)
+    ctx.strokeRect(-4,0,8,20)
+
+    ctx.fillStyle = hatColor
+    ctx.fillRect(-16,-18,32,28)
+    ctx.strokeRect(-16,-18,32,28)
+    ctx.fillRect(-12,-24,24,20)
+    ctx.strokeRect(-12,-24,24,20)
+
+    ctx.fillStyle = 'white'
+    ctx.fillRect(-5,-28,10,10)
+    ctx.strokeRect(-5,-28,10,10)
+
+    ctx.restore()
+
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.fillStyle = 'red'
+    ctx.fillRect(-25,-40,health/2,4)
+
+    ctx.restore()
 }
