@@ -101,3 +101,23 @@ function drawOp(x, y, orientation, health, addedMovement, shirtColor, hatColor){
 
     ctx.restore()
 }
+function drawApple(x, y, orientation){
+
+    ctx.save()
+    ctx.fillStyle = 'red'
+    ctx.translate(x, y)
+    ctx.rotate(orientation)
+
+
+    ctx.strokeRect(-8,-12,16,24)
+    ctx.strokeRect(-12,-10,24,16)
+
+    ctx.fillRect(-8,-12,16,24)
+    ctx.fillRect(-12,-10,24,16)
+    
+    ctx.fillStyle = 'brown'
+
+    ctx.fillRect(-2,-16,4,8)
+    
+    ctx.restore()
+}

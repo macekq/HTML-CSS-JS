@@ -32,6 +32,12 @@ var OPS = {
 var CURSOR = {
     x: canvas.width/2, y: 0
 }
+var APPLE = {
+    x: 0, y: 0,
+    destX: 0, destY: 0,
+    ready: true,
+    speed: 0
+}
 function playerOrientation(){
     let X = CURSOR.x - rect.left, Y = CURSOR.y - rect.top
 
@@ -95,6 +101,29 @@ function handleDwarfs(){
         OPS[i].shIndex += 0.5
         OPS[i].shIndex %= shArr.length
     }
+}
+function startAppleMovement(destX, destY){
+
+    APPLE.ready = false
+    APPLE.destX = destX, APPLE.destY = destY
+    APPLE.speed = 10
+    
+    angle = atan((CINDERELLA.y - destY)/(CINDERELLA.x - destX))
+
+    let appleIntr = setInterval(() => {
+        
+        let addX = cos(angle)*APPLE.speed
+        let addY = sin(angle)*APPLE.speed
+
+        APPLE.speed *= 0.95
+
+        if(APPLE.speed<0.1){
+            APPLE.ready = true
+            clearInterval(appleIntr)
+        }
+
+    }, 15)
+
 }
 window.addEventListener('mousemove', e => {
     CURSOR.x = e.clientX, CURSOR.y = e.clientY
