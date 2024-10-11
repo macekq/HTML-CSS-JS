@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 
 const rect = canvas.getBoundingClientRect()
 const colors = ['#99ccff','#00cc66','#ff9933','#333399','#9900cc','#ffcc66']
+const health = document.getElementById('health')
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -24,7 +25,9 @@ var CINDERELLA = {
     }
 }
 var OPS = {
-    all:[0]
+    damage: 1,
+    speed: 1,
+    all:[]
 }
 var CURSOR = {
     x: canvas.width/2, y: 0
@@ -50,8 +53,8 @@ function displayDwarfs(){
     for(let i of OPS.all){
         
         try{
-            let ang = determineOrientation(OPS[i].x, OPS[i].y, CINDERELLA.x, CINDERELLA.y)
-            drawOp(OPS[i].x, OPS[i].y, ang, OPS[i].health, shArr[Math.floor(OPS[i].shIndex)], OPS[i].shirtColor, OPS[i].hatColor)
+            OPS[i].orientation = determineOrientation(OPS[i].x, OPS[i].y, CINDERELLA.x, CINDERELLA.y)
+            drawOp(OPS[i].x, OPS[i].y, OPS[i].orientation, OPS[i].health, shArr[Math.floor(OPS[i].shIndex)], OPS[i].shirtColor, OPS[i].hatColor)        
         }catch(error){}
     }
 }
@@ -68,10 +71,30 @@ function createOp(X, Y){
         orientation: determineOrientation(X, Y, CINDERELLA.x, CINDERELLA.y),
         health: 100,
 
+        speed: Math.random()*1.2 + 0.4,
         shirtColor: colors[Math.floor(Math.random()*colors.length)],
         hatColor: colors[Math.floor(Math.random()*colors.length)]
     }
 
+}
+function handleDwarfs(){
+
+    for(let i of OPS.all){
+
+        if(OPS[i].x > CINDERELLA.x - 20 && OPS[i].x < CINDERELLA.x + 20 && OPS[i].y > CINDERELLA.y - 20 && OPS[i].y < CINDERELLA.y + 20){
+        
+            if(CINDERELLA.health>0) CINDERELLA.health -= OPS.damage
+
+        }else{
+            let addX = Math.sin(OPS[i].orientation)*OPS[i].speed
+            let addY = Math.cos(OPS[i].orientation)*OPS[i].speed
+            
+            OPS[i].x -= addX, OPS[i].y += addY
+        }
+
+        OPS[i].shIndex += 0.5
+        OPS[i].shIndex %= shArr.length
+    }
 }
 window.addEventListener('mousemove', e => {
     CURSOR.x = e.clientX, CURSOR.y = e.clientY
@@ -95,6 +118,7 @@ window.addEventListener('keydown', e => {
             CINDERELLA.movement.down = true
             break
     }
+    console.log(OPS)
 })
 window.addEventListener('keyup', e => {
 
@@ -120,9 +144,7 @@ var shoulderRotation = 0
 const shArr = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0, -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02]
 var shArrIndex = 0
 
-createOp(300,200)
-
-for(let i = 0; i<20; i++){
+for(let i = 0; i<5; i++){
     createOp(100*(i+1), 200)
 }
 
@@ -142,12 +164,16 @@ var mainInterval = setInterval(() => {
         if(shArr[Math.floor(shArrIndex)] != 0) shArrIndex++
     }
     shArrIndex %= shArr.length
+    //aktualizovat zivoty
+    health.style.width = `${CINDERELLA.health}%`
+    health.innerText = `${CINDERELLA.health}hp`
+
 
     ctx.clearRect(0,0,canvas.width,canvas.height)
     drawCinderella(shArr[Math.floor(shArrIndex)])
 
     displayDwarfs()
-
+    handleDwarfs()
     //kurzor
     customCursor(CURSOR.x, CURSOR.y)
 

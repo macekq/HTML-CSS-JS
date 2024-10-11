@@ -61,8 +61,6 @@ function customCursor(X, Y){
 }
 function drawOp(x, y, orientation, health, addedMovement, shirtColor, hatColor){
 
-    console.log(addedMovement, orientation)
-
     ctx.save()
     ctx.translate(x, y)
     ctx.rotate(orientation + addedMovement)
