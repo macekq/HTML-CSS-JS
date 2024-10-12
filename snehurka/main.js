@@ -34,7 +34,7 @@ var CURSOR = {
 }
 var APPLE = {
     x: 0, y: 0,
-    destX: 0, destY: 0,
+    orientation: 10,
     ready: true,
     speed: 0
 }
@@ -105,21 +105,37 @@ function handleDwarfs(){
 function startAppleMovement(destX, destY){
 
     APPLE.ready = false
-    APPLE.destX = destX, APPLE.destY = destY
+    APPLE.x = CINDERELLA.x, APPLE.y = CINDERELLA.y
     APPLE.speed = 10
-    
-    angle = atan((CINDERELLA.y - destY)/(CINDERELLA.x - destX))
+    APPLE.orientation = 5
+    let Cx = CINDERELLA.x, Cy = CINDERELLA.y
+    let end = false
+
+
+    angle = Math.atan((CINDERELLA.y - destY)/(CINDERELLA.x - destX))
+    if(angle<0) angle *= -1
+    console.log(angle)
 
     let appleIntr = setInterval(() => {
         
-        let addX = cos(angle)*APPLE.speed
-        let addY = sin(angle)*APPLE.speed
+        let addX = Math.cos(angle)*APPLE.speed
+        let addY = Math.sin(angle)*APPLE.speed
+
+        if(Cx < destX) APPLE.x += addX
+        else APPLE.x -= addX
+
+        if(Cy < destY) APPLE.y += addY
+        else APPLE.y -= addY
 
         APPLE.speed *= 0.95
+        APPLE.orientation *= 0.99
 
-        if(APPLE.speed<0.1){
+        if(APPLE.speed<0.3){
             APPLE.ready = true
             clearInterval(appleIntr)
+        }
+        if(end){
+            
         }
 
     }, 15)
@@ -127,8 +143,6 @@ function startAppleMovement(destX, destY){
 }
 window.addEventListener('mousemove', e => {
     CURSOR.x = e.clientX, CURSOR.y = e.clientY
-
-    playerOrientation()
 })
 
 window.addEventListener('keydown', e => {
@@ -147,7 +161,6 @@ window.addEventListener('keydown', e => {
             CINDERELLA.movement.down = true
             break
     }
-    console.log(OPS)
 })
 window.addEventListener('keyup', e => {
 
@@ -165,6 +178,15 @@ window.addEventListener('keyup', e => {
             CINDERELLA.movement.down = false
             break
     }
+})
+window.addEventListener('mousedown', e => {
+    if(e.button == 0 && APPLE.ready){
+        startAppleMovement(e.clientX, e.clientY)
+    }
+    console.log(e.clientX - 200, e.clientY - 200)
+})
+window.addEventListener('mouseup', e =>{
+    console.log(e.clientX - 200, e.clientY - 200)
 })
 
 drawCinderella()
@@ -199,10 +221,17 @@ var mainInterval = setInterval(() => {
 
 
     ctx.clearRect(0,0,canvas.width,canvas.height)
+    
+    playerOrientation()
     drawCinderella(shArr[Math.floor(shArrIndex)])
 
     displayDwarfs()
     handleDwarfs()
+    
+    drawExplodedApple(200,200,0)
+    drawExplodingApple2(500,200,0)
+
+    if(!APPLE.ready) drawApple(APPLE.x, APPLE.y, APPLE.orientation)
     //kurzor
     customCursor(CURSOR.x, CURSOR.y)
 

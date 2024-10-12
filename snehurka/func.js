@@ -121,3 +121,50 @@ function drawApple(x, y, orientation){
     
     ctx.restore()
 }
+function drawExplodedApple(x, y, orientation){
+
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(orientation)
+
+    ctx.fillStyle = 'rgba(255, 51, 0, 0.3)'
+    ctx.fillRect(-85, -85, 200, 170)
+
+    ctx.fillStyle = 'rgba(255, 75, 0, 0.4)'
+    ctx.fillRect(-70,-70,140,140)
+    ctx.fillRect(20, 20, 80, 80)
+    ctx.fillRect(-120, -35, 40, 70)
+    ctx.fillRect(15, -50, 70, -50)
+    ctx.fillRect(50, -50, 80, 80)
+    ctx.fillRect(-96, 15, 50, 60)
+    ctx.fillRect(-50, -35, 55, 40)
+    ctx.fillRect(-50,-40,75,60)
+
+    ctx.fillStyle = 'rgba(255, 180, 0, 0.5)'
+
+    ctx.fillRect(35, -60, 50, 40)
+    ctx.fillRect(-60, -20, 90, 70)
+    ctx.fillRect(-25, -65, 80, 70)
+    ctx.fillRect(40, 10, 40, 35)
+
+    ctx.fillStyle = 'rgba(255,200,200, 0.7)'
+    ctx.fillRect(-20,-20,40,40)
+    ctx.fillRect(15,0,55,35)
+    ctx.fillRect(20, -40, 35, 40)
+    ctx.fillRect(-50,-50,30,40)
+
+    ctx.fillStyle = 'rgba(255,255,255,0.5)'
+
+    ctx.fillRect(-10,-10,20,20)
+
+    ctx.restore()
+
+}
+function drawExplodingApple2(x, y, orientation){
+
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(orientation)
+
+    ctx.restore()
+}
