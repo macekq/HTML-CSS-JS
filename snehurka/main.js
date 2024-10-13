@@ -414,7 +414,10 @@ var mainInterval = setInterval(() => {
         window.alert('vyhrali jste!!!\nhrat znova?')
         window.location.assign('https://2nejlepsiostravskyrapper.guru/snehurka')
     }
-
+    if(CINDERELLA.health<=0){    
+        window.alert('projebal jsi!!!\nhrat znova?')
+        window.location.assign('https://2nejlepsiostravskyrapper.guru/snehurka')
+    }
 
     //kurzor
     customCursor(CURSOR.x, CURSOR.y)
