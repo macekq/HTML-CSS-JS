@@ -6,6 +6,10 @@
     <title>snehurka</title>
 </head>
 <style>
+    body{
+        overflow: hidden;
+        font-family: 'Courier New', Courier, monospace;
+    }
     canvas{
         position: absolute;
         top: 0; left: 0;
@@ -14,16 +18,33 @@
     
         cursor: none;
     }
+    nav{
+        color: white;
+        position: absolute;
+        top: 0; left: 0;
+
+        display: flex;
+        width: 100vw;
+    
+        text-shadow: 0 0 5px black;
+    }
+    nav div{
+        text-align: center;
+        width: 100%;
+    }
+    #killedOps, #opsToKill{
+        font-size: 2em;
+    }
     #stats{
         position: absolute;
-        top: 0; left: 100%;
-        transform: translateX(-100%);
+        top: 100%;
+        transform: translateY(-100%);
     }
     #healthBar{
-        width: 50vw;
+        width: 95vw;
         border: 0.1vh solid black;
         border-radius: 10px;
-        margin: 1vh;
+        margin: 2.5vw;
         text-align: center;
     }
     #health{
@@ -31,12 +52,33 @@
         background-color: red;
         border-radius: 10px;
     }
+    #amoContainer{
+        width: 10vw;
+        margin-left: auto;
+        color: white;
+    }
+    #amo{
+        font-size: 3em;
+        font-weight: bold;
+    }
 
 </style>
 <body>
     <canvas id="myCanvas"></canvas>
 
+    <nav>
+        <div>
+            <div>dwarfs killed</div>
+            <div id="killedOps">0</div>
+        </div>
+        <div>
+            <div>dwarfs to kill</div>
+            <div id="opsToKill">700</div>
+        </div>
+    </nav>
+
     <div id="stats">
+        <div id="amoContainer"><div>amo:</div><div id="amo">30</div></div>
         <div id="healthBar"><div id="health"></div></div>
     </div>
 

@@ -10,6 +10,8 @@ function drawCinderella(addedMovement){
 
     ctx.restore()
 
+    if(BULLETS.active) drawAr()
+
     ctx.save()
     ctx.translate(CINDERELLA.x, CINDERELLA.y)
     ctx.rotate(CINDERELLA.orientation + addedMovement)
@@ -37,6 +39,19 @@ function drawCinderella(addedMovement){
     
     ctx.fillStyle = 'black'
     ctx.fillRect(-1, -10, 2, 30)
+
+    ctx.restore()
+}
+function drawAr(){
+    
+    ctx.save()
+    ctx.translate(CINDERELLA.x, CINDERELLA.y)
+    ctx.rotate(CINDERELLA.orientation + 0.3)
+
+    ctx.fillStyle = 'black'
+
+    ctx.fillRect(-25, -40, 5, 70)
+    ctx.fillRect(-24, -50, 3, 80)
 
     ctx.restore()
 }
@@ -166,5 +181,42 @@ function drawExplodingApple2(x, y, orientation){
     ctx.translate(x, y)
     ctx.rotate(orientation)
 
+    ctx.fillStyle = 'rgba(255, 51, 0, 0.5)'
+
+    ctx.fillRect(-40,-40,80,80)
+    ctx.fillRect(-60,-50, 40, 40)
+    ctx.fillRect(-55,-25,30,40)
+    ctx.fillRect(-10,-10,65,60)
+    ctx.fillRect(0,-25,40,40)
+
+    ctx.fillStyle = 'rgba(255, 180, 0, 0.8)'
+
+    ctx.fillRect(-50,-35,35,30)
+    ctx.fillRect(-35,-10,50,35)
+    ctx.fillRect(0,-15,35,30)
+
+    ctx.fillStyle = 'rgba(255,255,255,0.8)'
+    
+    ctx.fillRect(-8,0,16,16)
+
     ctx.restore()
+}
+function drawBullet(x, y, orientation){
+
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(orientation)
+
+    ctx.fillStyle = 'white'
+
+    ctx.strokeRect(-2,-8,4,12)
+    ctx.fillRect(-2,-8,4,16)
+
+    ctx.fillStyle = 'rgba(255,255,255,0.4)'
+
+    ctx.fillRect(-2,8,4,16)
+    ctx.fillRect(-1,8,2,32)
+    
+    ctx.restore()
+
 }
