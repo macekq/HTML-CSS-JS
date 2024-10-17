@@ -116,7 +116,7 @@ function handleBullets(){
         if(BULLETS[id].x < -50 || BULLETS[id].x > canvas.width +50 || BULLETS[id].y < -50 || BULLETS[id].y > canvas.height +50){
 
             BULLETS.all.splice(BULLETS.all.indexOf(id), 1)
-            BULLETS[id] = undefined
+            delete BULLETS[id]
         }else{
         
             drawBullet(BULLETS[id].x, BULLETS[id].y, BULLETS[id].orientation + Math.PI/2)
@@ -127,7 +127,7 @@ function handleBullets(){
                         BULLETS[id].y > OPS[i].y - 20 && BULLETS[id].y < OPS[i].y + 20){
 
                             BULLETS.all.splice(BULLETS.all.indexOf(id), 1)
-                            BULLETS[id] = undefined
+                            delete BULLETS[id]
 
                             OPS[i].health -= BULLETS.damage
                     }
@@ -144,7 +144,7 @@ function handleDwarfs(){
 
             killedOps++
             OPS.all.splice(OPS.all.indexOf(i), 1)
-            OPS[i] = undefined
+            delete OPS[i]
 
         }else{
             if(OPS[i].x > CINDERELLA.x - 20 && OPS[i].x < CINDERELLA.x + 20 && OPS[i].y > CINDERELLA.y - 20 && OPS[i].y < CINDERELLA.y + 20){
