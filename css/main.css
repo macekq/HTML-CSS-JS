@@ -2,13 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
 body{
-    background: rgb(255,36,255);
+    /* background: rgb(255,36,255); */
+    background-color: rgb(200,0,0);
     color: white;
     overflow: hidden;
     margin: 0;
 }
 h1{
-    color: black;
+    /* color: black; */
     font-family: "Bebas Neue", sans-serif;
 
     position: absolute;
