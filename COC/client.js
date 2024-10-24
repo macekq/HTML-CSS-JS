@@ -4,11 +4,14 @@ var ME = {
     x: 0, y: 0,
     up: false, down: false, left: false, right: false,
     speed: 5,
-    id: 2
+    id: 2,
+    orientation: 0
 }   
+var cursor = {x: window.innerWidth+100, y: 0}
 var OP = {
     x: 0, y: 0,
-    id: 2
+    id: 2,
+    orientation: 0
 }
 
 connection.onopen = () => {
@@ -24,10 +27,10 @@ connection.onerror = (event) => {
 };
 
 connection.onmessage = (event) => {
-    console.log("Message received from the server:", event.data);
+    // console.log("Message received from the server:", event.data);
 
     const data = JSON.parse(event.data.toString());
-    console.log(data)
+    // console.log(data)
 
     if(ME.id == OP.id){
         connection.send(JSON.stringify(data));
@@ -62,6 +65,14 @@ function drawOP(){
 
     ctx.restore()
 
+}
+function playerOrientation(){
+    let X = cursor.x - rect.left, Y = cursor.y - rect.top
+
+    X -= ME.x
+    Y -= ME.y
+
+    ME.orientation = Math.atan2(Y, X) + Math.PI/2
 }
 canvas.width = window.innerWidth, canvas.height = window.innerHeight
 window.addEventListener('resize', () => {canvas.width = window.innerWidth, canvas.height = window.innerHeight})
@@ -102,6 +113,10 @@ window.addEventListener('keyup', e => {
         default: break
     }
 })
+window.addEventListener('mousemove', e => {
+    cursor.x = e.clientX
+    cursor.y = e.clientY
+})
 var mainInterval = setInterval(() => {
 
     if(ME.up) ME.y-=ME.speed
@@ -114,10 +129,18 @@ var mainInterval = setInterval(() => {
         id: ME.id
     }
 
-    connection.send(JSON.stringify(data));
+    try{
+        connection.send(JSON.stringify(data));
+    }catch(error){}
+
 
     ctx.clearRect(0,0,canvas.width,canvas.height)
+    
     drawME()
     drawOP()
+    
+    ostravskyGuru(200,200, 0, 0)
+
+    customCursor(cursor.x, cursor.y)
 
 }, 15)

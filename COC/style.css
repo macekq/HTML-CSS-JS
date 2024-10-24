@@ -8,16 +8,16 @@ body{
     background-color: rgb(48,48,48);
 }
 canvas{
-    top: 12vh; left: 0;
+    top: 0; left: 0;
     position: absolute;
 
-    width: 100vw; height: 88vh;
-    background-color:  rgba(0,0,0,0.2);
+    width: 100vw; height: 100vh;
+    /* background-color:  rgba(0,0,0,0.2); */
 }
 #status{
     /* background-color: rgba(255,0,0,0.2); */
 
-    width: 100vw; height: 10vh;
+    width: 100vw; height: 16vh;
     position: absolute;
     top: 0; left: 0;
     padding-top: 1%;
@@ -36,7 +36,7 @@ canvas{
 
     color: white;
 
-    font-size: 8em;
+    font-size: 6em;
     transform: translate(-50%, -50%) rotate(15deg);
 }
 #player1, #player2{

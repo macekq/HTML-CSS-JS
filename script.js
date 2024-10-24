@@ -3,7 +3,7 @@ document.getElementById('st-img').src = `assets/${guruPhotos[Math.floor(Math.ran
 
 
 var menu = document.getElementById('menu'), linkCnt = document.getElementById('linkContainer'), menuBtt = document.getElementById('menuBtt')
-var linkCount = 10
+var linkCount = 14
 var menuDown = false
 
 function countLinks(contID){
