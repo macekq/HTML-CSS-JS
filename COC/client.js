@@ -5,13 +5,15 @@ var ME = {
     up: false, down: false, left: false, right: false,
     speed: 5,
     id: 2,
-    orientation: 0
+    orientation: 0,
+    char: null,
 }   
 var cursor = {x: window.innerWidth+100, y: 0}
 var OP = {
     x: 0, y: 0,
     id: 2,
-    orientation: 0
+    orientation: 0,
+    char: null
 }
 
 connection.onopen = () => {
@@ -37,8 +39,11 @@ connection.onmessage = (event) => {
         
         ME.id = Math.floor(Math.random()*1000)
         data.id = Math.floor(Math.random()*1000)
+
+        if(ME.id>data.id) ME.char = 'ostravskyGuru', data.char = 'kktJohny'
+        else data.char = 'ostravskyGuru', ME.char = 'kktJohny'
     }
-    if(data.id!=ME.id) OP.x = data.x, OP.y = data.y, OP.id = data.id
+    if(data.id!=ME.id) OP = data
 }
 
 /** @type {HTMLCanvasElement} */
@@ -47,25 +52,20 @@ const ctx = canvas.getContext('2d');
 
 const rect = canvas.getBoundingClientRect()
 
-function drawME(){
-    ctx.save()
+function drawCharacter(x, y, orientation, addedMovement, charId){
 
-    ctx.fillStyle = 'red'
-    ctx.translate(ME.x, ME.y)
-    ctx.fillRect(-10,-10,20,20)
-
-    ctx.restore()
+    switch(charId){
+        case 'ostravskyGuru':
+            ostravskyGuru(x, y, orientation, addedMovement)
+            break
+        case 'kktJohny':
+            kktJohny(x, y, orientation, addedMovement)
+            break
+        
+        default: break
+    }
 }
-function drawOP(){
-    ctx.save()
 
-    ctx.fillStyle = 'blue'
-    ctx.translate(OP.x, OP.y)
-    ctx.fillRect(-10,-10,20,20)
-
-    ctx.restore()
-
-}
 function playerOrientation(){
     let X = cursor.x - rect.left, Y = cursor.y - rect.top
 
@@ -117,17 +117,18 @@ window.addEventListener('mousemove', e => {
     cursor.x = e.clientX
     cursor.y = e.clientY
 })
+
+const shArr = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.14, 0.12, 0.1, 0.08, 0.06, 0.04, 0.02, 0, -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02]
 var mainInterval = setInterval(() => {
+
+    ME.char = document.getElementById('charType').value    
 
     if(ME.up) ME.y-=ME.speed
     if(ME.down) ME.y+=ME.speed
     if(ME.left) ME.x-=ME.speed
     if(ME.right) ME.x+=ME.speed
 
-    const data = {
-        x: ME.x, y: ME.y,
-        id: ME.id
-    }
+    const data = ME
 
     try{
         connection.send(JSON.stringify(data));
@@ -136,10 +137,9 @@ var mainInterval = setInterval(() => {
 
     ctx.clearRect(0,0,canvas.width,canvas.height)
     
-    drawME()
-    drawOP()
-    
-    ostravskyGuru(200,200, 0, 0)
+    drawCharacter(ME.x, ME.y, ME.orientation, shArr[ME.shArrIndex], ME.char)
+    drawCharacter(OP.x, OP.y, OP.orientation, shArr[OP.shArrIndex], OP.char)
+
 
     customCursor(cursor.x, cursor.y)
 
