@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game jam je mrdka</title>
+</head>
+<style>
+    body{
+        background-color: rgb(64,64,64);
+    }
+    #bg{
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 100vw; height: 56vw;
+
+
+        background-color: black;
+    }
+    #bgSrc{
+        position: absolute;
+        width: 100%;
+    }
+    #user{
+        position: absolute;
+        top: 80%
+    }
+    #dialog{
+        position: absolute;
+        top: 100%;
+
+        margin: 1%;
+        padding: 1%;
+        border: 2px solid white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px black;
+
+        opacity: 0;
+
+        background-color: rgba(0,0,0,0.6);
+        color: white;
+    }
+    #NPC{
+        position: absolute;
+        top: 80%; left: 70%;
+
+        width: 10%;
+    }
+    @media(orientation: landscape){
+        #bg{
+            height: 100vh;
+            width: 178vh;
+        }
+    }
+</style>
+<body>
+
+    <div id="bg">
+        <img id="bgSrc" src="assets/bg0.jpg">
+        
+        <div id="user">
+            <img id="userVisial" src="assets/char.png">
+        </div>
+
+        <img id="NPC" src="assets/adel.png">
+
+        <div id="dialog">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam a reprehenderit sit adipisci porro 
+            similique corrupti earum, placeat ut rem perferendis soluta ex obcaecati illo dicta recusandae ipsa
+            libero velit.
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
