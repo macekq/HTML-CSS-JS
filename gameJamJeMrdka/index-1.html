@@ -8,7 +8,6 @@
 <style>
     body{
         background-color: rgb(64,64,64);
-        overflow: hidden;
     }
     #bg{
         position: absolute;
@@ -50,7 +49,7 @@
     }
     #NPC{
         position: absolute;
-        top: 65%; left: 70%;
+        top: 70%; left: 40%;
 
         width: 15%;
     }
@@ -62,12 +61,12 @@
     }
 </style>
 <body>
-    <pre id="indexId">0</pre>
+    <pre id="indexId">1</pre>
 
     <div id="bg">
-        <img id="bgSrc" src="assets/bg0.jpg">
+        <img id="bgSrc" src="assets/bg1.jpg">
 
-        <img id="NPC" src="assets/adel.png">
+        <img id="NPC" src="assets/kktSustik.png">
         
         <div id="user">
             <img src="assets/char.png">
@@ -80,10 +79,9 @@
         </div>
     </div>
 
+
     <script>
-        var NPC = {
-            x: 70, y: 65, size: 15
-        }
+        var NPC = {x: 40, y: 70, size: 15}
     </script>
     <script src="script.js"></script>
 </body>

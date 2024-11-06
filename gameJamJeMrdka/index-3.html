@@ -8,7 +8,6 @@
 <style>
     body{
         background-color: rgb(64,64,64);
-        overflow: hidden;
     }
     #bg{
         position: absolute;
@@ -48,9 +47,14 @@
         background-color: rgba(0,0,0,0.6);
         color: white;
     }
+    #gbel{
+        position: absolute;
+        top: 65%; left: 62%;
+        width: 12%;
+    }
     #NPC{
         position: absolute;
-        top: 65%; left: 70%;
+        top: 65%; left: 50%;
 
         width: 15%;
     }
@@ -62,27 +66,27 @@
     }
 </style>
 <body>
-    <pre id="indexId">0</pre>
+    <pre id="indexId">3</pre>
 
     <div id="bg">
-        <img id="bgSrc" src="assets/bg0.jpg">
+        <img id="bgSrc" src="assets/bg3.jpg">
 
-        <img id="NPC" src="assets/adel.png">
+        <img id="gbel" src="assets/gbel.png">
+        <img id="NPC" src="assets/top.png">
         
+
         <div id="user">
             <img src="assets/char.png">
         </div>
 
         <div id="dialog">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam a reprehenderit sit adipisci porro 
-            similique corrupti earum, placeat ut rem perferendis soluta ex obcaecati illo dicta recusandae ipsa
-            libero velit.
+            fin?
         </div>
     </div>
 
     <script>
         var NPC = {
-            x: 70, y: 65, size: 15
+            x: 50, y: 65, size: 15
         }
     </script>
     <script src="script.js"></script>
