@@ -156,6 +156,8 @@ function lost_fitShape(matrixArr){
     }
     return false
 }
+
+
 function snapping(){
 
     let rX = (SHAPE.x - FIELD.x)/SHAPE.size, rY = (SHAPE.y - FIELD.y)/SHAPE.size
@@ -182,6 +184,8 @@ function snapping(){
         SHAPE.ready = false
     }
 }
+
+
 function updateAll(){
     ctx.clearRect(0,0, window.innerWidth, window.innerHeight)
 
